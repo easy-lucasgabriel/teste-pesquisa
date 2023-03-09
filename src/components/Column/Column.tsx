@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { LayoutProps, SpaceProps, layout, space } from "styled-system";
+import { FlexboxProps, LayoutProps, SpaceProps, flexbox, layout, space } from "styled-system";
 
-type ColumnProps = LayoutProps & SpaceProps;
+type ColumnProps = LayoutProps & SpaceProps & FlexboxProps;
 
 export const Column = styled.div<ColumnProps>`
     display:flex;
-    align-items:center;
     gap:1vw;
     ${layout}
     ${space}
+    ${flexbox}
 `;
