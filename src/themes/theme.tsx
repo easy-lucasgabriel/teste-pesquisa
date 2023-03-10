@@ -9,7 +9,7 @@ fontSizes.body = fontSizes[0];
 fontSizes.bodyExtraLarge = fontSizes[1];
 fontSizes.displayExtraLarge = fontSizes[2];
 
-const primary = '#008000';
+const primary = '#2F4F4F';
 const secondary = '#256784';
 
 const theme = {

@@ -1,7 +1,8 @@
+import { Resultados } from "interfaces";
 import { api } from "providers";
-import { Result } from "interfaces";
 
-const getPers = () => api.get<Result[]>('/people/')
+
+const getPers = () => api.get<Resultados[]>(`/people/`)
 
 export const Personagens = {
   getPers

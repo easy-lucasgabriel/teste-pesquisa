@@ -8,9 +8,7 @@ export const Routes = () => {
       <Route path="/">
         <Home />
       </Route>
-      <Route path="*">
-        <Redirect to ="/" />
-      </Route>
+      
     </Switch>
     </BrowserRouter>
   )

@@ -1,4 +1,5 @@
-export interface Result {
+
+export interface Resultados {
   name: string;
   height: string;
   mass: string;
@@ -15,11 +16,4 @@ export interface Result {
   created: Date;
   edited: Date;
   url: string;
-}
-
-export interface RootObject {
-  count: number;
-  next: string;
-  previous?: any;
-  results: Result[];
 }

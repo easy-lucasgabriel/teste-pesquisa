@@ -1,9 +1,9 @@
-import { Result } from "interfaces";
+import { Resultados } from "interfaces";
 import { useCallback, useState } from "react";
 import { Personagens } from "services";
 
 export const usePers = () => {
-  const [personagens,setPersonagens] = useState<Result[]>([]);
+  const [personagens,setPersonagens] = useState<Resultados[]>([]);
 
   const getAll = useCallback (async () => {
     const { status, data } = await Personagens.getPers();
@@ -11,6 +11,7 @@ export const usePers = () => {
     if (status !== 200) throw new Error();
 
     setPersonagens(data);
+
   },[]);
 
   return { 
