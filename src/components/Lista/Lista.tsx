@@ -1,5 +1,19 @@
-
+import {useState} from 'react';
 const Lista = (props:any) => {
+
+  // const [order, setOrder] = useState(1);
+  // const [columnOrder, setColumnOrder] = useState('height');
+
+  // const handleOrder = (fieldName:any) => {
+  //   setOrder(-order)
+  //   setColumnOrder(fieldName)
+  // }
+
+  // resultado.sort( (a: any, b: any) => {
+  //   return a[columnOrder] < b[columnOrder] ? -order : order;
+  // } )
+  // onClick={ e => handleOrder('height')}
+  // onClick={ e => handleOrder('mass')}
   
   const resultado = props.props.data;
 
