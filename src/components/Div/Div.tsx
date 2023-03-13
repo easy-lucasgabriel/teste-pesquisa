@@ -5,7 +5,8 @@ type DivProps = LayoutProps & SpaceProps & FlexboxProps & ColorProps & BorderPro
 
 export const Div = styled.div<DivProps>`
     display:flex;
-    gap:1vw;
+    gap:0.5vw;
+    list-style:none;
     ${layout}
     ${space}
     ${flexbox}

@@ -11,8 +11,16 @@ export const GlobalStyles = createGlobalStyle <{theme : ThemeType}>`
     font-family: 'Ubuntu', sans-serif;
     border:0,
     box-sizing: border-box;
+    list-style:none;
   }
   body{
     background-color: ${ ({theme}) => theme.colors.primary}
+  }
+  main{
+    display:flex;
+    gap:5vh;
+    flex-direction:column;
+    justify-content:center;
+    margin-top:10vh;
   }
 `;

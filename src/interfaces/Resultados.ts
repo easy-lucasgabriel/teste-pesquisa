@@ -16,4 +16,8 @@ export interface Resultados {
   created: Date;
   edited: Date;
   url: string;
+  count: number;
+  next: string;
+  previous?: any;
+  results: Resultados[];
 }
