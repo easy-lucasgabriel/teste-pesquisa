@@ -1,7 +1,7 @@
 
 export interface Resultados {
   name: string;
-  height: string;
+  height: number;
   mass: string;
   hair_color: string;
   skin_color: string;
