@@ -22,7 +22,7 @@ function ListaPersonagens({ resultados }: ResultadosProps) {
   return (
     <ul>
       <li onClick={(e) => handleOrder("birth_year")}>Aperta aqui niver</li>
-      <li onClick={(e) => handleOrder("name")}>Aperta aqui name</li>
+      <li onClick={(e) => handleOrder("name")}>Aperta aqui mudança incrivel</li>
       <li onClick={(e) => handleOrder("height")}>Aperta aqui altura</li>
       {resultados.map((personagem, index) => {
         return (
