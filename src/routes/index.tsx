@@ -1,17 +1,13 @@
-import { BrowserRouter, Switch , Route, Redirect } from 'react-router-dom';
+import { BrowserRouter , Route, Routes } from 'react-router-dom';
 import { Home } from 'pages';
 
-export const Routes = () => {
+export const Routesz = () => {
   return(
     <BrowserRouter>
-    <Switch>
-      <Route path="/">
-        <Home />
+      <Routes>
+          <Route path="/" element={<Home />}>
       </Route>
-      <Route path="*">
-        <Redirect to ="/" />
-      </Route>
-    </Switch>
+      </Routes>
     </BrowserRouter>
   )
 }
