@@ -1,9 +1,9 @@
-import { Resultados } from "interfaces";
+import { RootObject } from "interfaces";
 import { useCallback, useState } from "react";
 import { Personagens } from "services";
 
 export const usePers = () => {
-  const [personagens,setPersonagens] = useState<Resultados[]>([]);
+  const [personagens,setPersonagens] = useState<RootObject[]>([]);
 
   const getAll = useCallback (async () => {
     const { status, data } = await Personagens.getPers();

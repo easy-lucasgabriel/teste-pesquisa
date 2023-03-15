@@ -1,8 +1,8 @@
-import { Resultados } from "interfaces";
+import { RootObject } from "interfaces";
 import { api } from "providers";
 
 
-const getPers = () => api.get<Resultados[]>(`/people/`);
+const getPers = () => api.get<RootObject[]>(`/report/transactions/`);
 
 
 export const Personagens = {

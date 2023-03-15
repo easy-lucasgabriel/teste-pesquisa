@@ -1,12 +1,12 @@
 import { Theme, GlobalStyles } from 'themes';
-import { Routes } from 'routes';
+import { Routesz } from 'routes';
 
 export const App = () => {
   return (
     <div>
       <Theme>
         <GlobalStyles />
-        <Routes />
+        <Routesz />
       </Theme>
     </div>
   );

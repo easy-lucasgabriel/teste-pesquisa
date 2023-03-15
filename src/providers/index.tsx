@@ -1,3 +1,4 @@
 import axios from 'axios';
 
-export const api = axios.create({ baseURL: 'https://swapi.dev/api/'})
+export const api = axios.create({ baseURL: 'http://54.76.180.109/'})
+

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AxiosResponse } from "axios";
 import { api } from "providers";
-import { Resultados } from "interfaces";
+import { RootObject } from "interfaces";
 import ListaPersonagens from "components/ListaPersonagens/ListaPersonagens";
 
 interface Resultados2 {
@@ -13,13 +13,11 @@ interface Resultados2 {
 }
 
 export const Home = () => {
-  const [pesquisa, setPesquisa] = useState<Resultados2>();
+  const [ pesquisa, setPesquisa ] = useState<Resultados2>();
   const { register, handleSubmit } = useForm();
   const { personagens, getAll } = usePers();
-  const [resposta, setResposta] = useState<AxiosResponse>();
-  const [pers, setPersonagens] = useState<Resultados[]>([]);
-  const [gente, setGente] = useState<Resultados[]>([]);
-
+  const [ resposta, setResposta ] = useState<AxiosResponse>();
+  
   useEffect(() => {
     getAll();
   }, [getAll]);
@@ -29,37 +27,23 @@ export const Home = () => {
   };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    if (pesquisa?.name) {
-      async function getUserData(search: number): Promise<AxiosResponse> {
-        const response = await api.get<Resultados[]>(`people/${search}`);
-        return response;
-      }
 
-      getUserData(pesquisa?.name)
-        .then((response) => {
-          setResposta(response);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [pesquisa]);
+  // useEffect(() => {
+  //   if (pesquisa?.name) {
+  //     async function getUserData(search: number): Promise<AxiosResponse> {
+  //       const response = await api.get<RootObject[]>(`people/${search}`);
+  //       return response;
+  //     }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    const getPeople = async () => {
-      const allPeople: Resultados[] = [];
-      let nextUrl = "https://swapi.dev/api/people/";
-      while (nextUrl !== null) {
-        const response = await api.get(nextUrl);
-        allPeople.push(...response.data.results);
-        nextUrl = response.data.next;
-      }
-      setGente(allPeople);
-    };
-    getPeople();
-  }, []);
+  //     getUserData(pesquisa?.name)
+  //       .then((response) => {
+  //         setResposta(response);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   }
+  // }, [pesquisa]);
 
   return (
     <main>
@@ -96,8 +80,8 @@ export const Home = () => {
           {resposta && <Lista props={resposta} />}
 
           <div>
-            <h1>Personagens do Star Wars</h1>
-            <ListaPersonagens resultados={gente} />
+            <h1>Lista das Finanças</h1>
+            <ListaPersonagens resultados={personagens} />
           </div>
         </Column>
       </Div>

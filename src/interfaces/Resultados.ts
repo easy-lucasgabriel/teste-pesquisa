@@ -1,23 +1,41 @@
 
-export interface Resultados {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-  gender: string;
-  homeworld: string;
-  films: string[];
-  species: string[];
-  vehicles: string[];
-  starships: string[];
-  created: Date;
-  edited: Date;
-  url: string;
-  count: number;
-  next: string;
-  previous?: any;
-  results: Resultados[];
+export interface Return {
+  Key: string;
+  QrCode: string;
+  Status: string;
+  Message: string;
+  Description: string;
+  IdTransaction: number;
+}
+
+export interface Sending {
+  brand: string;
+  value: number;
+  holder: string;
+  nascDate: string;
+  username: string;
+  cardNumber: string;
+  securityCode: string;
+  PaymentMethod: string;
+  expirationDate: string;
+  identification: string;
+}
+
+export interface DataContent {
+  return: Return;
+  sending: Sending;
+}
+
+export interface RootObject {
+  id: number;
+  created_date: string;
+  modified_date: string;
+  value: number;
+  external_id: string;
+  transaction_id?: any;
+  type_data: string;
+  type_transaction: string;
+  status: string;
+  data_content: DataContent;
+  user: number;
 }
