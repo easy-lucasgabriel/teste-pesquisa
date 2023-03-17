@@ -1,12 +1,13 @@
 import { Text, Input, Column, Div, Button } from "components";
 import Lista from "components/Lista/Lista";
-import { usePers } from "hooks";
+import { useBets, usePers } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AxiosResponse } from "axios";
 import { api } from "providers";
 import { RootObject } from "interfaces";
 import ListaPersonagens from "components/ListaPersonagens/ListaPersonagens";
+import ListaJogos from "components/ListaJogos/ListaJogos";
 
 interface Resultados2 {
   name: string | number | any | undefined;
@@ -16,11 +17,16 @@ export const Home = () => {
   const [ pesquisa, setPesquisa ] = useState<Resultados2>();
   const { register, handleSubmit } = useForm();
   const { personagens, getAll } = usePers();
+  const { bets, getTudo } = useBets();
   const [ resposta, setResposta ] = useState<AxiosResponse>();
-  
+
   useEffect(() => {
     getAll();
   }, [getAll]);
+
+  useEffect(() => {
+    getTudo();
+  }, [getTudo]);
 
   const onSubmit = (ev: any) => {
     setPesquisa(ev);
@@ -82,6 +88,11 @@ export const Home = () => {
           <div>
             <h1>Lista das Finanças</h1>
             <ListaPersonagens resultados={personagens} />
+          </div>
+
+          <div>
+            <h1>Lista dos Jogos</h1>
+            <ListaJogos results={bets} />
           </div>
         </Column>
       </Div>

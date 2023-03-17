@@ -1,7 +1,7 @@
 import { BrowserRouter , Route, Routes } from 'react-router-dom';
 import { Home } from 'pages';
 
-export const Routesz = () => {
+export const Rotas = () => {
   return(
     <BrowserRouter>
       <Routes>
