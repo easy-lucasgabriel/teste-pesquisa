@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { FlexboxProps, LayoutProps, SpaceProps, flexbox, layout, space, color, ColorProps, border, BorderProps } from "styled-system";
+import { FlexboxProps, LayoutProps, SpaceProps, flexbox, layout, space, color, ColorProps, border, BorderProps, position, PositionProps } from "styled-system";
 
-type ColumnProps = LayoutProps & SpaceProps & FlexboxProps & ColorProps & BorderProps;
+type ColumnProps = LayoutProps & SpaceProps & FlexboxProps & ColorProps & BorderProps & PositionProps;
 
 export const Column = styled.div<ColumnProps>`
     display:flex;
@@ -12,4 +12,5 @@ export const Column = styled.div<ColumnProps>`
     ${flexbox}
     ${color}
     ${border}
+    ${position}
 `;

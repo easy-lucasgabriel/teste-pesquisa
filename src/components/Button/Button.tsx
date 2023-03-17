@@ -4,8 +4,8 @@ import { FlexboxProps, LayoutProps, SpaceProps, flexbox, layout, space, color, C
 type ButtonProps = LayoutProps & SpaceProps & FlexboxProps & ColorProps & BorderProps;
 
 export const Button = styled.button<ButtonProps>`
-    padding: 17px 40px;
-    border-radius: 0;
+    padding: 15px 30px;
+    border-radius: 0.3vw;
     border: 0;
     background-color: #f7f7f7;
     box-shadow: rgb(0 0 0 / 5%) 0 0 8px;

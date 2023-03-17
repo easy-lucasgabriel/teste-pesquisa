@@ -1,4 +1,5 @@
 
+import dayjs from 'dayjs';
 import { BetTypes } from 'interfaces';
 
  interface ResultadosProps {
@@ -7,7 +8,7 @@ import { BetTypes } from 'interfaces';
  
  
 
-function ListaJogos({ results }:ResultadosProps) {
+export function ListaJogos({ results }:ResultadosProps) {
 
     console.log(results);
 
@@ -18,7 +19,7 @@ function ListaJogos({ results }:ResultadosProps) {
           <hr />
           email: {data.username} <br />
           valor apostado: {data.total_value} R$ <br />
-          data da aposta: {data.bet_date}
+          data da aposta: {dayjs(data.bet_date).format("DD/MM/YYYY")}
           <hr />
         </li>
       ))}
@@ -26,4 +27,3 @@ function ListaJogos({ results }:ResultadosProps) {
     )
 }
 
-export default ListaJogos;
