@@ -18,6 +18,8 @@ export const Home = () => {
   const { register, handleSubmit } = useForm();
   const { personagens, getAll } = usePers();
   const { bets, getTudo } = useBets();
+  const [ search, setSearch ] = useState('');
+  const [ search1, setSearch1 ] = useState('');
   const [ resposta, setResposta ] = useState<AxiosResponse>();
 
   useEffect(() => {
@@ -31,6 +33,12 @@ export const Home = () => {
   const onSubmit = (ev: any) => {
     setPesquisa(ev);
   };
+
+  const searchLoweCase = search.toLocaleLowerCase();
+  const searchLoweCase1 = search1.toLocaleLowerCase();
+
+  const busca = personagens.filter( busca => busca.data_content.sending.username.toLowerCase().includes(searchLoweCase));
+  const busca1 = bets.filter( busca => busca.username.toLowerCase().includes(searchLoweCase1));
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +76,26 @@ export const Home = () => {
             Lista de Pesquisa
           </Text>
           <Div>
-            <Input placeholder="" width="90%" type="" {...register("name")} />
+            <Input 
+            placeholder="Finanças" 
+            width="90%" 
+            type="" 
+            {...register("financa")} 
+            value={search} 
+            onChange={(e) => setSearch(e.target.value)}
+            />
+            <Button type="submit">OK</Button>
+          </Div>
+
+          <Div>
+            <Input 
+            placeholder="Jogos" 
+            width="90%" 
+            type="" 
+            {...register("jogos")} 
+            value={search1} 
+            onChange={(e) => setSearch1(e.target.value)}
+            />
             <Button type="submit">OK</Button>
           </Div>
         </form>
@@ -87,12 +114,12 @@ export const Home = () => {
 
           <div>
             <h1>Lista das Finanças</h1>
-            <ListaPersonagens resultados={personagens} />
+            <ListaPersonagens resultados={busca} />
           </div>
 
           <div>
             <h1>Lista dos Jogos</h1>
-            <ListaJogos results={bets} />
+            <ListaJogos results={busca1} />
           </div>
         </Column>
       </Div>
