@@ -1,12 +1,12 @@
 import { Theme, GlobalStyles } from 'themes';
-import { Routesz } from 'routes';
+import { Rotas } from 'routes';
 
 export const App = () => {
   return (
     <div>
       <Theme>
         <GlobalStyles />
-        <Routesz />
+        <Rotas />
       </Theme>
     </div>
   );

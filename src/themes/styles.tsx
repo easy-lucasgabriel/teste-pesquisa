@@ -18,9 +18,7 @@ export const GlobalStyles = createGlobalStyle <{theme : ThemeType}>`
   }
   main{
     display:flex;
-    gap:5vh;
-    flex-direction:column;
-    justify-content:center;
-    margin-top:10vh;
+    gap:0vh;
+    flex-direction:row;
   }
 `;
