@@ -18,8 +18,7 @@ export const Jogos = () => {
   const onSubmit = (ev: any) => {
     getAllDates(dateInitial, dateFinal);
   };
-
-
+  
   const searchLoweCase = search.toLocaleLowerCase();
 
   const busca = bets.filter((busca) =>
@@ -83,7 +82,7 @@ export const Jogos = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista dos Jogos</h2>
-            <ListaJogos results={busca} />
+            <ListaJogos results={resultSearch} />
           </Table>
         </Div>
       </Div>

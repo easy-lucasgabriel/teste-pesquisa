@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { RootObject } from "interfaces";
+import { useState } from "react";
+import { RootObject} from "interfaces";
 import dayjs from "dayjs";
 import { Tr, Th, Td, Div, Button } from "components";
 
@@ -11,14 +11,12 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
   const [sortedNumbers, setSortedNumbers] = useState<RootObject[]>([]);
   const [sortOrder, setSortOrder] = useState("asc");
 
-  console.log(resultados);
-
   function handleSort() {
     const sorted = resultados.slice().sort((a: any, b: any) => {
       if (sortOrder === "asc") {
-        return a.data_content.sending.value - b.data_content.sending.value;
+        return a.value - b.value;
       } else {
-        return b.data_content.sending.value - a.data_content.sending.value;
+        return b.value - a.value;
       }
     });
     setSortedNumbers(sorted);
@@ -51,7 +49,7 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
                 <Td>{data.data_content.sending.username}</Td>
                 <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.modified_date).format("DD/MM/YYYY")}</Td>
+                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
               </Tr>
             );
           })
@@ -60,7 +58,7 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
                 <Td>{data.data_content.sending.username}</Td>
                 <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.modified_date).format("DD/MM/YYYY")}</Td>
+                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
               </Tr>
             );
           })}

@@ -1,5 +1,6 @@
 import { Text, Input, Div, Button, ListaPersonagens, Table } from "components";
-import { usePers, useDates } from "hooks";
+import { usePers, useDates, useTooDates } from "hooks";
+import { RootObject } from "interfaces";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -10,7 +11,7 @@ export const Financas = () => {
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
   const { register, handleSubmit } = useForm();
-  const { resultSearch, getAllDates } = useDates();
+  const { resultSearch, getAllDates } = useTooDates();
 
   useEffect(() => {
     getAll();
@@ -25,6 +26,8 @@ export const Financas = () => {
   const onSubmit = (ev: any) => {
     getAllDates(dateInitial, dateFinal);
   };
+
+  console.log(resultSearch)
 
 
   return (
@@ -82,7 +85,7 @@ export const Financas = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista das Finanças</h2>
-            <ListaPersonagens resultados={busca} />
+            <ListaPersonagens resultados={resultSearch} />
           </Table>
         </Div>
       </Div>
