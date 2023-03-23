@@ -6,3 +6,4 @@ export * from './Button';
 export * from './Menu';
 export * from './ListaJogos';
 export * from './ListaPersonagens';
+export * from './Table';

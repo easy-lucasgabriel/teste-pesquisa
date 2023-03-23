@@ -1,65 +1,67 @@
-
-import { RootObject } from 'interfaces';
-import dayjs from 'dayjs';
-import { Column, Div } from 'components';
+import { useState } from "react";
+import { RootObject} from "interfaces";
+import dayjs from "dayjs";
+import { Tr, Th, Td, Div, Button } from "components";
 
 interface ResultadosProps {
   resultados: RootObject[];
 }
 
 export function ListaPersonagens({ resultados }: ResultadosProps) {
+  const [sortedNumbers, setSortedNumbers] = useState<RootObject[]>([]);
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  console.log(resultados);
+  function handleSort() {
+    const sorted = resultados.slice().sort((a: any, b: any) => {
+      if (sortOrder === "asc") {
+        return a.value - b.value;
+      } else {
+        return b.value - a.value;
+      }
+    });
+    setSortedNumbers(sorted);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  }
 
   return (
-    <Column
-      width="100%"
-      flexDirection="column"
-    >
-      <Div
-        width="100%"
-        height="4vh"
-      // bg="#00000056"
+    <Div flexDirection="column">
+      <Tr
+        backgroundColor="none"
+        justifyContent="space-evenly"
+        textAlign="center"
       >
-        <Div
-          minWidth="40%"
-        >Email</Div>
-        <Div
-          minWidth="20%"
-        >Valor total apostado</Div>
-        <Div
-          minWidth="20%"
-        >Data da aposta</Div>
-      </Div>
-
-      {resultados.map((personagem, index) => (
-        <Column
-          key={index}>
-          <Div
-            minWidth="40%">
-            {personagem.data_content.sending.username}
-          </Div>
-
-          <Div
-            minWidth="20%"
-          >
-            {personagem.data_content.sending.value} R$
-          </Div>
-
-          <Div
-            minWidth="20%"
-          >
-            {dayjs(personagem.modified_date).format("DD/MM/YYYY HH:mm:ss")}
-          </Div>
-
-          <Div
-            minWidth="20%"
-          >
-            {personagem.data_content.return.Message}
-          </Div>
-
-        </Column>
-      ))}
-    </Column>
-  )
+        <Button onClick={handleSort}>
+          Ordenar {sortOrder === "asc" ? "decrescente" : "crescente"}{" "}
+        </Button>
+      </Tr>
+      <Tr
+        backgroundColor="rgba(0,0,0,0.05)"
+        justifyContent="space-evenly"
+        textAlign="center"
+      >
+        <Th>Email</Th>
+        <Th>Valor total apostado</Th>
+        <Th>Data da aposta</Th>
+      </Tr>
+      {sortedNumbers.length > 0
+        ? sortedNumbers.map((data, index) => {
+            return (
+              <Tr key={index} justifyContent="space-evenly" textAlign="center">
+                <Td>{data.data_content.sending.username}</Td>
+                <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+              </Tr>
+            );
+          })
+        : resultados.map((data, index) => {
+            return (
+              <Tr key={index} justifyContent="space-evenly" textAlign="center">
+                <Td>{data.data_content.sending.username}</Td>
+                <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+              </Tr>
+            );
+          })}
+    </Div>
+  );
 }
