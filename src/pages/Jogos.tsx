@@ -11,6 +11,13 @@ export const Jogos = () => {
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useDates();
 
+  const transactions = [
+    { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
+    { id: 2, name: "Transaction 2", value: 100, date: new Date("2022-01-02") },
+    { id: 3, name: "Transaction 3", value: 35, date: new Date("2022-01-03") },
+    { id: 4, name: "Transaction 4", value: 10, date: new Date("2022-01-04") },
+  ];
+
   useEffect(() => {
     getTudo();
   }, [getTudo]);
@@ -82,7 +89,7 @@ export const Jogos = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista dos Jogos</h2>
-            <ListaJogos results={resultSearch} />
+            <ListaJogos results={transactions}/>
           </Table>
         </Div>
       </Div>

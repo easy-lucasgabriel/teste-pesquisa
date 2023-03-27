@@ -3,23 +3,46 @@ import { RootObject} from "interfaces";
 import dayjs from "dayjs";
 import { Tr, Th, Td, Div, Button } from "components";
 
+interface Transaction {
+  id: number;
+  name: string;
+  value: number;
+  date: Date;
+}
+
 interface ResultadosProps {
-  resultados: RootObject[];
+  resultados: Transaction[];
 }
 
 export function ListaPersonagens({ resultados }: ResultadosProps) {
-  const [sortedNumbers, setSortedNumbers] = useState<RootObject[]>([]);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
+    []
+  );
+
+  function sortTransactions(a: Transaction, b: Transaction) {
+    if (sortOrder === "asc") {
+      return a.value - b.value;
+    } else {
+      return b.value - a.value;
+    }
+  }
 
   function handleSort() {
+    const sorted = resultados.slice().sort(sortTransactions);
+    setSortedTransactions(sorted);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  }
+
+  function handleDateSort() {
     const sorted = resultados.slice().sort((a: any, b: any) => {
       if (sortOrder === "asc") {
-        return a.value - b.value;
+        return dayjs(a.date).diff(b.date);
       } else {
-        return b.value - a.value;
+        return dayjs(b.date).diff(a.date);
       }
     });
-    setSortedNumbers(sorted);
+    setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
 
@@ -27,11 +50,14 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
     <Div flexDirection="column">
       <Tr
         backgroundColor="none"
-        justifyContent="space-evenly"
+        justifyContent="flex-end"
         textAlign="center"
       >
         <Button onClick={handleSort}>
-          Ordenar {sortOrder === "asc" ? "decrescente" : "crescente"}{" "}
+          valor{" "}
+        </Button>
+        <Button onClick={handleDateSort}>
+          data{" "}
         </Button>
       </Tr>
       <Tr
@@ -43,22 +69,22 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
         <Th>Valor total apostado</Th>
         <Th>Data da aposta</Th>
       </Tr>
-      {sortedNumbers.length > 0
-        ? sortedNumbers.map((data, index) => {
+      {sortedTransactions.length > 0
+        ? sortedTransactions.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.data_content.sending.username}</Td>
-                <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td>{data.name}</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
               </Tr>
             );
           })
         : resultados.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.data_content.sending.username}</Td>
-                <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td>{data.name}</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
               </Tr>
             );
           })}

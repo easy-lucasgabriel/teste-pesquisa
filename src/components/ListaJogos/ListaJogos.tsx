@@ -3,23 +3,46 @@ import dayjs from "dayjs";
 import { BetTypes } from "interfaces";
 import { useState } from "react";
 
+interface Transaction {
+  id: number;
+  name: string;
+  value: number;
+  date: Date;
+}
+
 interface ResultadosProps {
-  results: BetTypes[];
+  results: Transaction[];
 }
 
 export function ListaJogos({ results }: ResultadosProps) {
-  const [sortedNumbers, setSortedNumbers] = useState<BetTypes[]>([]);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
+    []
+  );
+
+  function sortTransactions(a: Transaction, b: Transaction) {
+    if (sortOrder === "asc") {
+      return a.value - b.value;
+    } else {
+      return b.value - a.value;
+    }
+  }
 
   function handleSort() {
+    const sorted = results.slice().sort(sortTransactions);
+    setSortedTransactions(sorted);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  }
+
+  function handleDateSort() {
     const sorted = results.slice().sort((a: any, b: any) => {
       if (sortOrder === "asc") {
-        return a.total_value - b.total_value;
+        return dayjs(a.date).diff(b.date);
       } else {
-        return b.total_value - a.total_value;
+        return dayjs(b.date).diff(a.date);
       }
     });
-    setSortedNumbers(sorted);
+    setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
 
@@ -27,11 +50,15 @@ export function ListaJogos({ results }: ResultadosProps) {
     <Div flexDirection="column">
       <Tr
         backgroundColor="none"
-        justifyContent="space-evenly"
+        justifyContent="flex-end"
         textAlign="center"
+        
       >
         <Button onClick={handleSort}>
-          Ordenar {sortOrder === "asc" ? "decrescente" : "crescente"}{" "}
+          valor{" "}
+        </Button>
+        <Button onClick={handleDateSort}>
+          data{" "}
         </Button>
       </Tr>
       <Tr
@@ -45,25 +72,25 @@ export function ListaJogos({ results }: ResultadosProps) {
         <Th>Data da aposta</Th>
         <Th>Resultado</Th>
       </Tr>
-      {sortedNumbers.length > 0
-      ? sortedNumbers.map((data, index) => {
-        return <Tr key={index} justifyContent="space-evenly" textAlign="center">
-          <Td>{data.username}</Td>
-          <Td>{data.total_value.toFixed(2)} R$</Td>
-          <Td>{data.reg_number}</Td>
-          <Td>{dayjs(data.bet_date).format("DD/MM/YYYY")}</Td>
-          <Td>{data.bet_status === "0" ? 'Perdeu' : 'Ganhou'}</Td>
-        </Tr>;
-      })
-      : results.map((data, index) => {
-        return <Tr key={index} justifyContent="space-evenly" textAlign="center">
-          <Td>{data.username}</Td>
-          <Td>{data.total_value.toFixed(2)} R$</Td>
-          <Td>{data.reg_number}</Td>
-          <Td>{dayjs(data.bet_date).format("DD/MM/YYYY")}</Td>
-          <Td>{data.bet_status === "0" ? 'Perdeu' : 'Ganhou'}</Td>
-        </Tr>;
-      })}
+      {sortedTransactions.length > 0
+        ? sortedTransactions.map((data, index) => {
+            return (
+              <Tr key={index} justifyContent="space-evenly" textAlign="center">
+                <Td>{data.name}</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              </Tr>
+            );
+          })
+        : results.map((data, index) => {
+            return (
+              <Tr key={index} justifyContent="space-evenly" textAlign="center">
+                <Td>{data.name}</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              </Tr>
+            );
+          })}
     </Div>
   );
 }

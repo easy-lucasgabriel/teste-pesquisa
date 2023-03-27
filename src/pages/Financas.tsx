@@ -13,22 +13,16 @@ export const Financas = () => {
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
 
-  useEffect(() => {
-    getAll();
-  }, [getAll]);
-
-  const searchLoweCase = search.toLocaleLowerCase();
-
-  const busca = personagens.filter((busca) =>
-    busca.data_content.sending.username.toLowerCase().includes(searchLoweCase)
-  );
-
   const onSubmit = (ev: any) => {
     getAllDates(dateInitial, dateFinal);
   };
 
-  console.log(resultSearch)
-
+  const transactions = [
+    { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
+    { id: 2, name: "Transaction 2", value: 100, date: new Date("2022-01-02") },
+    { id: 3, name: "Transaction 3", value: 35, date: new Date("2022-01-03") },
+    { id: 4, name: "Transaction 4", value: 10, date: new Date("2022-01-04") },
+  ];
 
   return (
     <Div width="85%" flexDirection="column">
@@ -85,7 +79,7 @@ export const Financas = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista das Finanças</h2>
-            <ListaPersonagens resultados={resultSearch} />
+            <ListaPersonagens resultados={transactions} />
           </Table>
         </Div>
       </Div>

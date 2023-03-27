@@ -57,6 +57,7 @@ ${typography}
 `;
 export const Tr = styled.tr<TableProps>`
 display:flex;
+gap:10px;
   ${layout}
   ${space}
 ${flexbox}
