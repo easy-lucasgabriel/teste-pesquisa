@@ -7,3 +7,4 @@ export * from './Menu';
 export * from './ListaJogos';
 export * from './ListaPersonagens';
 export * from './Table';
+export * from './Range';
