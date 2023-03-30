@@ -65,3 +65,18 @@ export interface BetTypes {
   isPromoter: boolean
   user: number
 }
+
+export interface Loterias {
+  id: number;
+  name: string;
+  lottery_type: string;
+}
+
+export interface RangeValues {
+  minValue: number;
+  maxValue: number;
+}
+
+export interface RangeProps {
+  onChange: (value: number) => void;
+}

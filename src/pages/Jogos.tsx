@@ -3,6 +3,9 @@ import { Text, Input, Div, Button, ListaJogos, Table, Range } from "components";
 import { useBets, useDates } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { RootObject, Loterias } from "interfaces";
+import axios from 'axios';
+
 
 export const Jogos = () => {
   const { bets, getTudo } = useBets();
@@ -21,20 +24,20 @@ export const Jogos = () => {
     { id: 4, name: "Transaction 4", value: 10, date: new Date("2022-01-04") },
   ];
 
-  const loterias = [
-    { id: 1, loteria: "BRAZINO" },
-    { id: 2, loteria: "Casas Bahia" },
-    { id: 3, loteria: "SBT" },
-    { id: 4, loteria: "Record" },
-    { id: 5, loteria: "Globo" },
-    { id: 6, loteria: "Band" },
-    { id: 7, loteria: "Bras" },
-    { id: 8, loteria: "Se" },
-    { id: 9, loteria: "Tatu" },
-    { id: 10, loteria: "boa" },
-    { id: 11, loteria: "oi" },
-    { id: 12, loteria: "iaou" }
-  ]
+  const [loterias, setLoterias] = useState<Loterias[]>([])
+
+  async function fetchLoterias() {
+    const response = await axios.get<Loterias[]>('http://54.76.180.109/api/v2/check_lotteries_available');
+    setLoterias(response.data);
+  }
+
+  useEffect(() => {
+    fetchLoterias();
+  }, [])
+
+  const handleChangeLoterias = (value: any[]) => {
+    setLotas(value)
+  }
 
   useEffect(() => {
     getTudo();
@@ -43,10 +46,6 @@ export const Jogos = () => {
   const onSubmit = (ev: any) => {
     getAllDates(dateInitial, dateFinal);
   };
-
-  const handleChange = (value: string[]) => {
-    setLotas(value)
-  }
 
   return (
     <Div width="85%" flexDirection="column">
@@ -117,14 +116,14 @@ export const Jogos = () => {
                 mode='multiple'
                 style={{ minWidth: '30%' }}
                 placeholder="Loterias"
-                onChange={handleChange}
+                onChange={handleChangeLoterias}
                 optionLabelProp="label"
               >
-                {loterias.map((data, index) => {
-                  return <><Option key={index} value={data.loteria}>
-                    <Space>{data.loteria}</Space>
-                  </Option></>
-                })}
+                {loterias.map((loterias) => (
+                  <Option key={loterias.id} value={loterias.lottery_type} name={loterias.name}>
+                    <Space>{loterias.lottery_type}</Space>
+                  </Option>
+                ))};
               </Select>
 
               <Button type="submit">OK</Button>

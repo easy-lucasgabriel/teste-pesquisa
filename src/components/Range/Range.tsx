@@ -15,8 +15,7 @@ export function Range() {
            justifyContent="center"
         >0
         <Div
-        position="absolute"
-        marginBottom= "100px" 
+
         >{value}</Div>
         <input type = "range" min = "0" max = "1000" value={value} onChange={(e) => handleChange} />
             1000
