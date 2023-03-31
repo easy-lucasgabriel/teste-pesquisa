@@ -1,25 +1,93 @@
-import { Div } from "components/Div";
 import { useState } from 'react';
+import styled from 'styled-components';
 
-export function Range() {
-    const [value,setValue] = useState();
+export const Wrapper = styled.div`
+    background-color: #f7f7f7;
+    color: #242424;
+    padding: 0.15rem 0.5rem;
+    min-height: 20px;
+    font-size:14px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    line-height: 1.15;
+    box-shadow: 0px 5px 20px -18px;
 
-    const handleChange= (ev:any) =>{
-        setValue(ev)
+    &:focus {
+        border-bottom: 2px solid #5b5fc7;
+        border-radius: 4px 4px 2px 2px;
     }
 
-    return (
-        <Div
-           boxShadow=" rgb(0 0 0 / 5%) 0 0 8px"
-           backgroundColor="#f7f7f7"
-           justifyContent="center"
-        >0
-        <Div
+    &:hover {
+        outline: 1px solid lightgrey;
+    }
+`
 
-        >{value}</Div>
-        <input type = "range" min = "0" max = "1000" value={value} onChange={(e) => handleChange} />
-            1000
-        </Div >
+export const PrinceInput = styled.div`
+    width: 100%;
+    display: flex;
+    margin: 30px 0 35px;
+`
+
+export const Field = styled.div`
+    display: flex;
+    width: 100%;
+    height: 30px;
+    align-items: center;
+`
+
+export const InputNumber = styled.input`
+    width: 100%;
+    height: 100%;
+    outline: none;
+    font-size: 19px;
+    margin-left: 12px;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #999;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button, ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+`
+
+export const Separator = styled.div`
+    width: 130px;
+    display: flex;
+    font-size: 19px;
+    align-items: center;
+    justify-content: center;
+`
+export function Range() {
+    const [max, setMax ] = useState(0);
+    const [min, setMin ] = useState(0);
+    
+    console.log(max, min);
+
+
+    return (
+            <Wrapper>
+                <PrinceInput>
+                    <Field>
+                        <span>Min</span>
+                        <InputNumber
+                            type='number'
+                            value={min}
+                            onChange={(e:any) => setMin(e.target.value)}
+                        />
+                    </Field>
+                    <Separator />
+                    <Field>
+                        <span>Max</span>
+                        <InputNumber
+                            type='number'
+                            value={max}
+                            onChange={(e:any) => setMax(e.target.value)}
+                        />
+                    </Field>
+                </PrinceInput>
+            </Wrapper>
     )
 }
 

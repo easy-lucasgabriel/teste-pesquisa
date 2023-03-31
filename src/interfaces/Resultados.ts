@@ -77,6 +77,5 @@ export interface RangeValues {
   maxValue: number;
 }
 
-export interface RangeProps {
-  onChange: (value: number) => void;
-}
+
+
