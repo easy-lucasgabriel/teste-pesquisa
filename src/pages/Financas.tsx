@@ -1,7 +1,7 @@
 import { Select, Space } from 'antd';
 import axios from 'axios';
 import { Text, Input, Div, Button, ListaJogos, Table, Range, ListaPersonagens } from "components";
-import { usePers, useDates, useTooDates } from "hooks";
+import { usePers, useDates, useTooDates, useLotteries } from "hooks";
 import { RootObject, Loterias } from "interfaces";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ export const Financas = () => {
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
   const [aRes, setARes] = useState();
+  const { lotteries, getTudo } = useLotteries();
   const [lotas, setLotas] = useState(['']);
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
@@ -31,16 +32,11 @@ export const Financas = () => {
     { id: 4, name: "Transaction 4", value: 10, date: new Date("2022-01-04") },
   ];
 
-  const [loterias, setLoterias] = useState<Loterias[]>([])
-
-  async function fetchLoterias() {
-    const response = await axios.get<Loterias[]>('http://54.76.180.109/api/v2/check_lotteries_available');
-    setLoterias(response.data);
-  }
-
   useEffect(() => {
-    fetchLoterias();
+    getTudo();
   }, [])
+
+  console.log(lotteries);
 
   const handleChangeLoterias = (value: string[]) => {
     setLotas(value)
@@ -137,7 +133,7 @@ export const Financas = () => {
                 onChange={handleChangeLoterias}
                 optionLabelProp="label"
               >
-                {loterias.map((loterias) => (
+                {lotteries.map((loterias:any) => (
                   <Option key={loterias.id} value={loterias.lottery_type} name={loterias.name}>
                     <Space>{loterias.lottery_type}</Space>
                   </Option>

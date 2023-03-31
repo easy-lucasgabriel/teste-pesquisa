@@ -143,6 +143,7 @@ export const Jogos = () => {
               </Select>
 
               <Select
+              placeholder='Premiadas'
                 style={{
                   width: 120,
                 }}
