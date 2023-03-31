@@ -1,21 +1,23 @@
 import { Select, Space } from 'antd';
 import { Text, Input, Div, Button, ListaJogos, Table, Range } from "components";
-import { useBets, useDates } from "hooks";
+import { useDates } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { RootObject, Loterias } from "interfaces";
-import axios from 'axios';
+import { Loterias } from "interfaces";
+import { api } from 'providers';
 
 
 export const Jogos = () => {
-  const { bets, getTudo } = useBets();
+  const [loterias, setLoterias] = useState<Loterias[]>([]);
   const [search, setSearch] = useState("");
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
+  const [premios, setPremios] = useState([]);
   const { register, handleSubmit } = useForm();
-  const [lotas, setLotas] = useState(['']);
+  const [lotas, setLotas] = useState('');
   const { resultSearch, getAllDates } = useDates();
   const { Option } = Select;
+  const [aRes, setARes] = useState();
 
   const transactions = [
     { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
@@ -24,28 +26,45 @@ export const Jogos = () => {
     { id: 4, name: "Transaction 4", value: 10, date: new Date("2022-01-04") },
   ];
 
-  const [loterias, setLoterias] = useState<Loterias[]>([])
-
-  async function fetchLoterias() {
-    const response = await axios.get<Loterias[]>('http://54.76.180.109/api/v2/check_lotteries_available');
-    setLoterias(response.data);
+   async function fetchLoterias() {
+     const response = await api.get<Loterias[]>('http://54.171.103.34/api/v2/check_lotteries_available');
+     setLoterias(response.data);
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     fetchLoterias();
-  }, [])
+  },[])
 
-  const handleChangeLoterias = (value: any[]) => {
+  async function fetchPesquisa() {
+
+    if (dateInitial && dateFinal){
+      api.get(`54.76.180.109/api/v2/bet/list/report/`,{
+        params: {
+          created_date_min: dateInitial,
+          created_date_max: dateFinal,
+          pgtoSource: premios,
+          bet_lottery: lotas
+        }}
+      )
+      .then((response) => (setARes(response.data)))
+      .catch((error) => (console.log(error)))
+    }
+  }
+
+  console.log(aRes)
+
+  const handleChangeLoterias = (value: any) => {
     setLotas(value)
   }
 
-  useEffect(() => {
-    getTudo();
-  }, [getTudo]);
+  const handleChange = (value: any) => {
+   setPremios(value)
+  }
 
   const onSubmit = (ev: any) => {
     getAllDates(dateInitial, dateFinal);
   };
+
 
   return (
     <Div width="85%" flexDirection="column">
@@ -93,9 +112,9 @@ export const Jogos = () => {
             </Div>
 
             <Div
-            width="50%"
-            justifyContent="space-between">
-              
+              width="50%"
+              justifyContent="space-between">
+
               <Input
                 placeholder="Insira um nome"
                 width="35%"
@@ -110,7 +129,7 @@ export const Jogos = () => {
 
             <Div
               width="100%"
-              justifyContent="space-between"
+              justifyContent="flex-start"
             >
               <Select
                 mode='multiple'
@@ -126,7 +145,24 @@ export const Jogos = () => {
                 ))};
               </Select>
 
-              <Button type="submit">OK</Button>
+              <Select
+                style={{
+                  width: 120,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: '1',
+                    label: 'Winning',
+                  },
+                  {
+                    value: '0',
+                    label: 'Credit',
+                  }
+                ]}
+              />
+
+              <Button type="submit" onClick={fetchPesquisa}>OK</Button>
             </Div>
           </Div>
         </Div>
