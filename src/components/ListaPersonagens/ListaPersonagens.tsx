@@ -12,13 +12,17 @@ interface Transaction {
 
 interface ResultadosProps {
   resultados: Transaction[];
+  min: any;
+  max: any;
 }
 
-export function ListaPersonagens({ resultados }: ResultadosProps) {
+export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
     []
   );
+
+  const filteredResultados = resultados.filter((data) => data.value >= min && data.value <= max);
 
   function sortTransactions(a: Transaction, b: Transaction) {
     if (sortOrder === "asc") {
@@ -29,13 +33,13 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
   }
 
   function handleSort() {
-    const sorted = resultados.slice().sort(sortTransactions);
+    const sorted = filteredResultados.slice().sort(sortTransactions);
     setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
 
   function handleDateSort() {
-    const sorted = resultados.slice().sort((a: any, b: any) => {
+    const sorted = filteredResultados.slice().sort((a: any, b: any) => {
       if (sortOrder === "asc") {
         return dayjs(a.date).diff(b.date);
       } else {
@@ -45,6 +49,8 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
     setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
+
+  const valorAposta = filteredResultados.map((data) => {return data.value});
 
   return (
     <Div flexDirection="column">
@@ -69,7 +75,7 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
         <Th>Valor total apostado</Th>
         <Th>Data da aposta</Th>
       </Tr>
-      {sortedTransactions.length > 0
+        {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
@@ -79,7 +85,7 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
               </Tr>
             );
           })
-        : resultados.map((data, index) => {
+        : filteredResultados.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
                 <Td>{data.name}</Td>
@@ -87,7 +93,7 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
                 <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
               </Tr>
             );
-          })}
+          }) }
     </Div>
   );
 }

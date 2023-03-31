@@ -7,7 +7,7 @@ export const Menu = () => {
     <>
     <Column
       width="15%"
-      height="100vh"
+      height="auto"
   
       >
       <Div

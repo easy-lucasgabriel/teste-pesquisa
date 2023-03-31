@@ -9,15 +9,16 @@ import { api } from 'providers';
 
 export const Jogos = () => {
   const [loterias, setLoterias] = useState<Loterias[]>([]);
-  const [search, setSearch] = useState("");
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
   const [premios, setPremios] = useState([]);
-  const { register, handleSubmit } = useForm();
   const [lotas, setLotas] = useState('');
+  const [aRes, setARes] = useState();
   const { resultSearch, getAllDates } = useDates();
   const { Option } = Select;
-  const [aRes, setARes] = useState();
+  const [min,setMin] = useState<number>();
+  const [max,setMax] = useState<number>();
+  const { handleSubmit } = useForm();
 
   const transactions = [
     { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
@@ -65,6 +66,14 @@ export const Jogos = () => {
     getAllDates(dateInitial, dateFinal);
   };
 
+  function handleMinChange(name:number) {
+    setMin(name)
+  }
+
+  function handleMaxChange(name:number) {
+    setMax(name)
+  }
+
 
   return (
     <Div width="85%" flexDirection="column">
@@ -97,7 +106,6 @@ export const Jogos = () => {
                 width="50%"
                 type="date"
                 value={dateInitial}
-                {...register("dateInitial")}
                 onChange={(e) => setDateInitial(e.target.value)}
               />
 
@@ -106,7 +114,6 @@ export const Jogos = () => {
                 width="50%"
                 type="date"
                 value={dateFinal}
-                {...register("dateFinal")}
                 onChange={(e) => setDateFinal(e.target.value)}
               />
             </Div>
@@ -114,17 +121,7 @@ export const Jogos = () => {
             <Div
               width="50%"
               justifyContent="space-between">
-
-              <Input
-                placeholder="Insira um nome"
-                width="35%"
-                type=""
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-
-              <Range
-              />
+              <Range onMinChange={handleMinChange} onMaxChange={handleMaxChange}/>
             </Div>
 
             <Div

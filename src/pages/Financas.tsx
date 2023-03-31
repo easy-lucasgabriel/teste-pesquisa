@@ -5,17 +5,20 @@ import { usePers, useDates, useTooDates } from "hooks";
 import { RootObject, Loterias } from "interfaces";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import {api} from "providers";
 
 
 export const Financas = () => {
-  const { personagens, getAll } = usePers();
-  const [search, setSearch] = useState("");
+  const [premios,setPremios] = useState([]);
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
+  const [aRes, setARes] = useState();
+  const [lotas, setLotas] = useState(['']);
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
   const { Option } = Select;
-  const [lotas, setLotas] = useState(['']);
+  const [min,setMin] = useState<number>();
+  const [max,setMax] = useState<number>();
 
   const onSubmit = (ev: any) => {
     getAllDates(dateInitial, dateFinal);
@@ -41,6 +44,34 @@ export const Financas = () => {
 
   const handleChangeLoterias = (value: string[]) => {
     setLotas(value)
+  }
+
+  const handleChange = (value: any) => {
+    setPremios(value)
+   }
+
+   async function fetchPesquisa() {
+
+    if (dateInitial && dateFinal){
+      api.get(`54.76.180.109/api/v2/bet/list/report/`,{
+        params: {
+          created_date_min: dateInitial,
+          created_date_max: dateFinal,
+          pgtoSource: premios,
+          bet_lottery: lotas
+        }}
+      )
+      .then((response) => (setARes(response.data)))
+      .catch((error) => (console.log(error)))
+    }
+  }
+
+  function handleMinChange(name:number) {
+    setMin(name)
+  }
+
+  function handleMaxChange(name:number) {
+    setMax(name)
   }
 
   return (
@@ -92,21 +123,12 @@ export const Financas = () => {
               width="50%"
               justifyContent="space-between">
 
-              <Input
-                placeholder="Insira um nome"
-                width="35%"
-                type=""
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-
-              <Range
-              />
+              <Range onMinChange={handleMinChange} onMaxChange={handleMaxChange}/>
             </Div>
 
             <Div
               width="100%"
-              justifyContent="space-between"
+              justifyContent="flex-start"
             >
               <Select
                 mode='multiple'
@@ -122,7 +144,23 @@ export const Financas = () => {
                 ))};
               </Select>
 
-              <Button type="submit">OK</Button>
+              <Select
+                style={{
+                  width: 120,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: '1',
+                    label: 'Winning',
+                  },
+                  {
+                    value: '0',
+                    label: 'Credit',
+                  }
+                ]}/>
+
+              <Button type="submit" onClick={fetchPesquisa}>OK</Button>
             </Div>
           </Div>
         </Div>
@@ -138,7 +176,7 @@ export const Financas = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista das Finanças</h2>
-            <ListaPersonagens resultados={transactions} />
+            <ListaPersonagens min={min} max={max} resultados={transactions} />
           </Table>
         </Div>
       </Div>

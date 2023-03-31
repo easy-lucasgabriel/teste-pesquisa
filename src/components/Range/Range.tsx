@@ -1,5 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+interface Props {
+    onMinChange: (min: number) => void;
+    onMaxChange: (max: number) => void;
+  }
 
 export const Wrapper = styled.div`
     background-color: #f7f7f7;
@@ -59,12 +64,12 @@ export const Separator = styled.div`
     align-items: center;
     justify-content: center;
 `
-export function Range() {
+export function Range({ onMinChange, onMaxChange } : Props) {
     const [max, setMax ] = useState(0);
     const [min, setMin ] = useState(0);
+    onMinChange(min)
+    onMaxChange(max)
     
-    console.log(max, min);
-
 
     return (
             <Wrapper>
