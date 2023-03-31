@@ -77,7 +77,7 @@ export function Range({ onMinChange, onMaxChange } : Props) {
                     <Field>
                         <span>Min</span>
                         <InputNumber
-                            type='number'
+                             type='number'
                             value={min}
                             onChange={(e:any) => setMin(e.target.value)}
                         />

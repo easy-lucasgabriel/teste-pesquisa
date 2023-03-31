@@ -175,7 +175,7 @@ export const Jogos = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista dos Jogos</h2>
-            <ListaJogos results={transactions} />
+            <ListaJogos min={min} max={max} results={transactions} />
           </Table>
         </Div>
       </Div>

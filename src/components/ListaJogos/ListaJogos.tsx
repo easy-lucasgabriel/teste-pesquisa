@@ -12,13 +12,17 @@ interface Transaction {
 
 interface ResultadosProps {
   results: Transaction[];
+  min: any;
+  max: any;
 }
 
-export function ListaJogos({ results }: ResultadosProps) {
+export function ListaJogos({ results, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
     []
   );
+
+  const filteredResultados = results.filter((data) => data.value >= min && data.value <= max);
 
   function sortTransactions(a: Transaction, b: Transaction) {
     if (sortOrder === "asc") {
@@ -35,7 +39,7 @@ export function ListaJogos({ results }: ResultadosProps) {
   }
 
   function handleDateSort() {
-    const sorted = results.slice().sort((a: any, b: any) => {
+    const sorted = filteredResultados.slice().sort((a: any, b: any) => {
       if (sortOrder === "asc") {
         return dayjs(a.date).diff(b.date);
       } else {
@@ -82,7 +86,7 @@ export function ListaJogos({ results }: ResultadosProps) {
               </Tr>
             );
           })
-        : results.map((data, index) => {
+        : filteredResultados.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
                 <Td>{data.name}</Td>

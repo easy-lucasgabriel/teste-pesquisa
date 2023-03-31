@@ -145,6 +145,7 @@ export const Financas = () => {
               </Select>
 
               <Select
+                placeholder='Premiada'  
                 style={{
                   width: 120,
                 }}
