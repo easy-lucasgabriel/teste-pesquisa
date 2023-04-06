@@ -1,29 +1,21 @@
 import { Select, Space } from 'antd';
-import axios from 'axios';
-import { Text, Input, Div, Button, ListaJogos, Table, Range, ListaPersonagens } from "components";
-import { usePers, useDates, useTooDates, useLotteries } from "hooks";
-import { RootObject, Loterias } from "interfaces";
+import { Text, Input, Div, Button, Table, Range, ListaPersonagens } from "components";
+import { useTooDates, useLotteries } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {api} from "providers";
 
 
 export const Financas = () => {
-  const [premios,setPremios] = useState([]);
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
-  const [aRes, setARes] = useState();
   const { lotteries, getTudo } = useLotteries();
-  const [lotas, setLotas] = useState(['']);
+  const [premios, setPremios] = useState([]);
+  const [lotas, setLotas] = useState();
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
   const { Option } = Select;
   const [min,setMin] = useState<number>();
   const [max,setMax] = useState<number>();
-
-  const onSubmit = (ev: any) => {
-    getAllDates(dateInitial, dateFinal);
-  };
 
   const transactions = [
     { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
@@ -36,31 +28,13 @@ export const Financas = () => {
     getTudo();
   }, [])
 
-  console.log(lotteries);
-
-  const handleChangeLoterias = (value: string[]) => {
+  const handleChangeLoterias = (value: any) => {
     setLotas(value)
   }
 
   const handleChange = (value: any) => {
     setPremios(value)
    }
-
-   async function fetchPesquisa() {
-
-    if (dateInitial && dateFinal){
-      api.get(`54.76.180.109/api/v2/bet/list/report/`,{
-        params: {
-          created_date_min: dateInitial,
-          created_date_max: dateFinal,
-          pgtoSource: premios,
-          bet_lottery: lotas
-        }}
-      )
-      .then((response) => (setARes(response.data)))
-      .catch((error) => (console.log(error)))
-    }
-  }
 
   function handleMinChange(name:number) {
     setMin(name)
@@ -69,6 +43,16 @@ export const Financas = () => {
   function handleMaxChange(name:number) {
     setMax(name)
   }
+
+  const onSubmit = (ev: any) => {
+    
+    if(dateInitial && dateFinal){
+      getAllDates(dateInitial,dateFinal,premios,lotas)
+    }else{
+      window.alert("insira uma data inicial e uma final")
+    }
+  };
+
 
   return (
     <Div width="85%" flexDirection="column">
@@ -149,15 +133,15 @@ export const Financas = () => {
                 options={[
                   {
                     value: '1',
-                    label: 'Winning',
+                    label: 'Entrada',
                   },
                   {
-                    value: '0',
-                    label: 'Credit',
+                    value: '2',
+                    label: 'Saida',
                   }
                 ]}/>
 
-              <Button type="submit" onClick={fetchPesquisa}>OK</Button>
+              <Button type="submit" onClick={onSubmit}>OK</Button>
             </Div>
           </Div>
         </Div>

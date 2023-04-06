@@ -1,4 +1,4 @@
-import { Select, Space } from 'antd';
+import { Pagination, Select, Space } from 'antd';
 import { Text, Input, Div, Button, ListaJogos, Table, Range } from "components";
 import { useDates } from "hooks";
 import { useEffect, useState } from "react";
@@ -12,8 +12,7 @@ export const Jogos = () => {
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
   const [premios, setPremios] = useState([]);
-  const [lotas, setLotas] = useState('');
-  const [aRes, setARes] = useState();
+  const [lotas, setLotas] = useState();
   const { resultSearch, getAllDates } = useDates();
   const { Option } = Select;
   const [min,setMin] = useState<number>();
@@ -28,31 +27,13 @@ export const Jogos = () => {
   ];
 
    async function fetchLoterias() {
-     const response = await api.get<Loterias[]>('http://54.171.103.34/api/v2/check_lotteries_available');
+     const response = await api.get<Loterias[]>('/check_lotteries_available');
      setLoterias(response.data);
   }
 
   useEffect(()=>{
     fetchLoterias();
   },[])
-
-  async function fetchPesquisa() {
-
-    if (dateInitial && dateFinal){
-      api.get(`54.76.180.109/api/v2/bet/list/report/`,{
-        params: {
-          created_date_min: dateInitial,
-          created_date_max: dateFinal,
-          pgtoSource: premios,
-          bet_lottery: lotas
-        }}
-      )
-      .then((response) => (setARes(response.data)))
-      .catch((error) => (console.log(error)))
-    }
-  }
-
-  console.log(aRes)
 
   const handleChangeLoterias = (value: any) => {
     setLotas(value)
@@ -63,7 +44,12 @@ export const Jogos = () => {
   }
 
   const onSubmit = (ev: any) => {
-    getAllDates(dateInitial, dateFinal);
+    
+    if(dateInitial && dateFinal){
+      getAllDates(dateInitial,dateFinal,premios,lotas)
+    }else{
+      window.alert("insira uma data inicial e uma final")
+    }
   };
 
   function handleMinChange(name:number) {
@@ -73,8 +59,7 @@ export const Jogos = () => {
   function handleMaxChange(name:number) {
     setMax(name)
   }
-
-
+  
   return (
     <Div width="85%" flexDirection="column">
       <Div
@@ -108,7 +93,6 @@ export const Jogos = () => {
                 value={dateInitial}
                 onChange={(e) => setDateInitial(e.target.value)}
               />
-
               <Input
                 placeholder="Data Final"
                 width="50%"
@@ -143,7 +127,7 @@ export const Jogos = () => {
               </Select>
 
               <Select
-              placeholder='Premiadas'
+                placeholder="Premiada"
                 style={{
                   width: 120,
                 }}
@@ -160,7 +144,7 @@ export const Jogos = () => {
                 ]}
               />
 
-              <Button type="submit" onClick={fetchPesquisa}>OK</Button>
+              <Button type="submit" onClick={onSubmit}>OK</Button>
             </Div>
           </Div>
         </Div>
@@ -177,6 +161,7 @@ export const Jogos = () => {
           <Table flexDirection="column">
             <h2>Lista dos Jogos</h2>
             <ListaJogos min={min} max={max} results={transactions} />
+            <Pagination defaultCurrent={0} total={50} />
           </Table>
         </Div>
       </Div>
