@@ -1,4 +1,3 @@
-export * from './usePers';
-export * from './useBets';
+export * from './usePokes';
 export * from './useDates';
 export * from './useLotteries';

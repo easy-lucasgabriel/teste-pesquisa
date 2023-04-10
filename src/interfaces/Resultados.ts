@@ -77,5 +77,20 @@ export interface RangeValues {
   maxValue: number;
 }
 
+export interface PageTypes {
+  count: number
+  next: string
+  previous: string
+  results: Result[]
+}
+
+export interface Result {
+  types: any;
+  weight: any;
+  height: any;
+  name: any
+  url: string
+}
+
 
 

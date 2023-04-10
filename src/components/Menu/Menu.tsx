@@ -22,6 +22,7 @@ export const Menu = () => {
       >
         <Link to="/results-jogos"><Button>Lista de Jogos</Button></Link>
         <Link to="/results-financas"><Button>Lista de Finanças</Button></Link>
+        <Link to="/results-pokes"><Button>Lista de Pokémon</Button></Link>
       </Div>
       </Column>
       </>

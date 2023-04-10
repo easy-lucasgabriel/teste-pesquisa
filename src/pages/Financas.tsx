@@ -1,21 +1,30 @@
-import { Select, Space } from 'antd';
-import { Text, Input, Div, Button, Table, Range, ListaPersonagens } from "components";
+import { Select, Space } from "antd";
+import {
+  Text,
+  Input,
+  Div,
+  Button,
+  Table,
+  Range,
+  ListaPersonagens,
+} from "components";
 import { useTooDates, useLotteries } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
 
 export const Financas = () => {
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
   const { lotteries, getTudo } = useLotteries();
   const [premios, setPremios] = useState([]);
+  const [situacao, setSit] = useState<number>();
+  const [transacao, setTransacao] = useState<number>();
   const [lotas, setLotas] = useState();
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
   const { Option } = Select;
-  const [min,setMin] = useState<number>();
-  const [max,setMax] = useState<number>();
+  const [min, setMin] = useState<number>();
+  const [max, setMax] = useState<number>();
 
   const transactions = [
     { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
@@ -26,33 +35,33 @@ export const Financas = () => {
 
   useEffect(() => {
     getTudo();
-  }, [])
+  }, []);
 
-  const handleChangeLoterias = (value: any) => {
-    setLotas(value)
+  function handleMinChange(name: number) {
+    setMin(name);
   }
 
-  const handleChange = (value: any) => {
-    setPremios(value)
-   }
-
-  function handleMinChange(name:number) {
-    setMin(name)
+  function handleMaxChange(name: number) {
+    setMax(name);
   }
 
-  function handleMaxChange(name:number) {
-    setMax(name)
+  function handleTransChange(value: number) {
+    setTransacao(value);
   }
+
+  function handleSitChange(value: number) {
+    setSit(value);
+  }
+
+  console.log(situacao, transacao);
 
   const onSubmit = (ev: any) => {
-    
-    if(dateInitial && dateFinal){
-      getAllDates(dateInitial,dateFinal,premios,lotas)
-    }else{
-      window.alert("insira uma data inicial e uma final")
+    if (dateInitial && dateFinal) {
+      getAllDates(dateInitial, dateFinal, situacao, transacao);
+    } else {
+      window.alert("insira uma data inicial e uma final");
     }
   };
-
 
   return (
     <Div width="85%" flexDirection="column">
@@ -70,78 +79,84 @@ export const Financas = () => {
           width="100%"
           flexDirection="column"
         >
-          <Text fontWeight="600" color="rgba(10,10,10,.9)">
-            Lista de Pesquisa
-          </Text>
-          <Div
-            width="100%"
-            flexDirection="column"
-          >
-            <Div
-              width="50%">
 
-              <Input
-                placeholder="Data Inicial"
-                width="50%"
-                type="date"
-                value={dateInitial}
-                {...register("dateInitial")}
-                onChange={(e) => setDateInitial(e.target.value)}
-              />
+          <Div width="50%" flexDirection="column">
+            <Div width="80%">
 
-              <Input
-                placeholder="Data Final"
-                width="50%"
-                type="date"
-                value={dateFinal}
-                {...register("dateFinal")}
-                onChange={(e) => setDateFinal(e.target.value)}
+              <Div width="50%" flexDirection="column">
+                <Text color="grey">Data inicial</Text>
+                <Input
+                  placeholder="Data Inicial"
+                  width="90%"
+                  type="date"
+                  {...register("dateInitial")}
+                  onChange={(e) => setDateInitial(e.target.value)}
+                />
+              </Div>
+
+              <Div width="50%" flexDirection="column">
+              <Text color="grey">Data final</Text>
+                <Input
+                  placeholder="Data Final"
+                  width="100%"
+                  type="date"
+                  {...register("dateFinal")}
+                  onChange={(e) => setDateFinal(e.target.value)}
+                />
+              </Div>
+            </Div>
+
+            <Div height="20%">
+              <Range
+                onMinChange={handleMinChange}
+                onMaxChange={handleMaxChange}
               />
             </Div>
 
-            <Div
-              width="50%"
-              justifyContent="space-between">
-
-              <Range onMinChange={handleMinChange} onMaxChange={handleMaxChange}/>
-            </Div>
-
-            <Div
-              width="100%"
-              justifyContent="flex-start"
-            >
+            <Div width="100%" justifyContent="flex-start">
               <Select
-                mode='multiple'
-                style={{ minWidth: '30%' }}
-                placeholder="Loterias"
-                onChange={handleChangeLoterias}
-                optionLabelProp="label"
-              >
-                {lotteries.map((loterias:any) => (
-                  <Option key={loterias.id} value={loterias.lottery_type} name={loterias.name}>
-                    <Space>{loterias.lottery_type}</Space>
-                  </Option>
-                ))};
-              </Select>
-
-              <Select
-                placeholder='Premiada'  
+                placeholder="Transação"
                 style={{
                   width: 120,
                 }}
-                onChange={handleChange}
+                onChange={handleTransChange}
                 options={[
                   {
-                    value: '1',
-                    label: 'Entrada',
+                    value: "1",
+                    label: "Entrada",
                   },
                   {
-                    value: '2',
-                    label: 'Saida',
-                  }
-                ]}/>
+                    value: "2",
+                    label: "Saida",
+                  },
+                ]}
+              />
 
-              <Button type="submit" onClick={onSubmit}>OK</Button>
+              <Select
+                placeholder="Situação"
+                style={{
+                  width: 120,
+                }}
+                onChange={handleSitChange}
+                options={[
+                  {
+                    value: "1",
+                    label: "Pendente",
+                  },
+                  {
+                    value: "2",
+                    label: "Pago",
+                  },
+                  {
+                    value: "3",
+                    label: "Erro",
+                  },
+                ]}
+              />
+
+              <Button type="submit" onClick={onSubmit}>
+                OK
+              </Button>
             </Div>
           </Div>
         </Div>

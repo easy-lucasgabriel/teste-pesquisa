@@ -10,12 +10,12 @@ const getDate = (dateInitial:string, dateFinal:string, premios: any, lotas:any) 
   }
 });
 
-const getTooDate = (dateInitial:string, dateFinal:string, premios: any, lotas:any) => api.get<RootObject[]>(`/report/transactions/`, {
+const getTooDate = (dateInitial:string, dateFinal:string, situacao: any, transacao:any) => api.get<RootObject[]>(`/report/transactions/`, {
   params: {
     created_date_min: dateInitial,
     created_date_max: dateFinal,
-    pgtoSource: premios,
-    type_transaction: lotas,
+    bet_status: situacao,
+    pag_method: transacao,
   }
 });
 

@@ -23,8 +23,8 @@ export const useDates = () => {
 export const useTooDates = () => {
   const [resultSearch,setResultSearch] = useState<RootObject[]>([]);
 
-  const getAllDates = useCallback (async (dateInitial:string, dateFinal:string, premios:any, lotas:any) => {
-    const { status, data } = await Dates.getTooDate(dateInitial, dateFinal, premios, lotas);
+  const getAllDates = useCallback (async (dateInitial:string, dateFinal:string, situacao:any, transacao:any) => {
+    const { status, data } = await Dates.getTooDate(dateInitial, dateFinal, situacao, transacao);
 
     if (status !== 200) throw new Error();
 

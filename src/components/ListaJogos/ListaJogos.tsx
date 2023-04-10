@@ -33,7 +33,7 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
   }
 
   function handleSort() {
-    const sorted = results.slice().sort(sortTransactions);
+    const sorted = filteredResultados.slice().sort(sortTransactions);
     setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
