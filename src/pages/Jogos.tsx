@@ -23,16 +23,16 @@ export const Jogos = () => {
   const { handleSubmit } = useForm();
 
   const userEmail = [
-    { id: 1, email: 'auser1@example.com' },
-    { id: 2, email: 'buser2@example.com' },
-    { id: 3, email: 'cuser3@example.com' },
-    { id: 4, email: 'duser4@example.com' },
-    { id: 5, email: 'euser5@example.com' },
-    { id: 6, email: 'user6@example.com' },
-    { id: 7, email: 'user7@example.com' },
-    { id: 8, email: 'user8@example.com' },
-    { id: 9, email: 'user9@example.com' },
-    { id: 10, email: 'user10@example.com' },
+    { id: 1, email: 'andremerli74@gmail.com	' },
+    { id: 2, email: 'zxhbpg@jmurip.com' },
+    { id: 3, email: 'pmlxew@veracg.com' },
+    { id: 4, email: 'fabiosilvarodolpho@gmail.com	' },
+    { id: 5, email: 'feliperepresentante@yahoo.com.br	' },
+    { id: 6, email: 'fernando.financeiro@Yahoo.com.br' },
+    { id: 7, email: 'fernandopontes@outlook.com' },
+    { id: 8, email: 'dlima99@bol.com.br' },
+    { id: 9, email: 'larissahbaldoino@gmail.com' },
+    { id: 10, email: 'mark3qf527@hotmail.com	' },
     { id: 11, email: 'user11@example.com' },
     { id: 12, email: 'user12@example.com' },
     { id: 13, email: 'user13@example.com' },
@@ -65,10 +65,6 @@ export const Jogos = () => {
     { id: 40, email: 'user40@example.com' },
   ];
 
-  const searchLowerCase = search.toLocaleLowerCase();
-
-  const busca = userEmail.filter(busca => busca.email.toLocaleLowerCase().includes(searchLowerCase));
-
   const transactions = [
     { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
     { id: 2, name: "Transaction 2", value: 100, date: new Date("2022-01-02") },
@@ -85,19 +81,23 @@ export const Jogos = () => {
     fetchLoterias();
   }, [])
 
-  function handleChangeEmail(value: any, option:any) {
+  const handleChangeLoterias = (value: any) => {
+    setLotas(value)
+  }
 
-    const selectedIndex = option.key;
-    setEmail (busca[selectedIndex].email)
+  const searchLowerCase = search.toLocaleLowerCase();
 
-    setId(value);
+  const busca = userEmail.filter(busca => busca.email.toLocaleLowerCase().includes(searchLowerCase));
+
+  function handleChangeEmail(value: any) {
+    const selectedEmail = userEmail.find((busca) => busca.email === value);
+    setEmail(selectedEmail?.email);
+    setId(selectedEmail?.id);
   }
   console.log('Valores selecionados:', id, 'Email selecionado: ', email);
 
 
-  const handleChangeLoterias = (value: any) => {
-    setLotas(value)
-  }
+ 
 
   const handleChange = (value: any) => {
     setPremios(value)
@@ -214,7 +214,7 @@ export const Jogos = () => {
                 value={email}
               >
                 {busca.map((email) => (
-                  <Option key={email.email} value={email.id}>
+                  <Option key={email.id} value={email.email}>
                     <Space>{email.email}</Space>
                   </Option>
                 ))}
