@@ -2,6 +2,7 @@ import { useState } from "react";
 import { RootObject} from "interfaces";
 import dayjs from "dayjs";
 import { Tr, Th, Td, Div, Button } from "components";
+import { Modal } from "antd";
 
 interface Transaction {
   id: number;
@@ -52,6 +53,20 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
 
   const valorAposta = filteredResultados.map((data) => {return data.value});
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Div flexDirection="column">
       <Tr
@@ -74,6 +89,7 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
         <Th>Email</Th>
         <Th>Valor total apostado</Th>
         <Th>Data da aposta</Th>
+        <Th>Resumo</Th>
       </Tr>
         {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
@@ -82,6 +98,11 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
                 <Td>{data.name}</Td>
                 <Td>{data.value.toFixed(2)} R$</Td>
                 <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+                <Button onClick={showModal}>Abrir</Button>
+                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                  <p>{data.id}</p>
+                  <p>{data.name}</p>
+                </Modal>
               </Tr>
             );
           })
@@ -91,6 +112,11 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
                 <Td>{data.name}</Td>
                 <Td>{data.value.toFixed(2)} R$</Td>
                 <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+                <Button onClick={showModal}>Abrir</Button>
+                                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                  <p>{data.id}</p>
+                  <p>{data.name}</p>
+                </Modal>
               </Tr>
             );
           }) }
