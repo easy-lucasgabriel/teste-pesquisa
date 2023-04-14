@@ -94,7 +94,7 @@ export const Jogos = () => {
     setEmail(selectedEmail?.email);
     setId(selectedEmail?.id);
   }
-  console.log('Valores selecionados:', id, 'Email selecionado: ', email);
+  
 
 
  

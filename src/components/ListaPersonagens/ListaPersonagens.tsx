@@ -1,37 +1,29 @@
 import { useState } from "react";
-import { RootObject} from "interfaces";
+import { Data, ResultadoFinancas } from "interfaces";
 import dayjs from "dayjs";
 import { Tr, Th, Td, Div, Button } from "components";
 import { Modal } from "antd";
 
-interface Transaction {
-  id: number;
-  name: string;
-  value: number;
-  date: Date;
-}
-
 interface ResultadosProps {
-  resultados: Transaction[];
+  resultados: Data;
   min: any;
   max: any;
 }
 
 export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
-  const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
-    []
-  );
+  const [sortedTransactions, setSortedTransactions] = useState<ResultadoFinancas[]>([]);
 
-  const filteredResultados = resultados.filter((data) => data.value >= min && data.value <= max);
+  const filteredResultados = resultados?.results.filter((data : any) => data.value >= min && data.value <= max);
 
-  function sortTransactions(a: Transaction, b: Transaction) {
+  function sortTransactions(a: any, b: any) {
     if (sortOrder === "asc") {
       return a.value - b.value;
     } else {
       return b.value - a.value;
     }
   }
+
 
   function handleSort() {
     const sorted = filteredResultados.slice().sort(sortTransactions);
@@ -50,8 +42,6 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
     setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
-
-  const valorAposta = filteredResultados.map((data) => {return data.value});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -95,27 +85,27 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
         ? sortedTransactions.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.name}</Td>
+                <Td>{data.user}</Td>
                 <Td>{data.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+                <Td>{dayjs(data.created_date).format('DD-MM-YYYY')}</Td>
                 <Button onClick={showModal}>Abrir</Button>
                 <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                   <p>{data.id}</p>
-                  <p>{data.name}</p>
+                  <p>{data.user}</p>
                 </Modal>
               </Tr>
             );
           })
-        : filteredResultados.map((data, index) => {
+        : filteredResultados.map((data : any, index : any) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.name}</Td>
+                <Td>{data.user}</Td>
                 <Td>{data.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+                <Td>{dayjs(data.created_date).format("DD-MM-YYYY")}</Td>
                 <Button onClick={showModal}>Abrir</Button>
                                 <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                   <p>{data.id}</p>
-                  <p>{data.name}</p>
+                  <p>{data.user}</p>
                 </Modal>
               </Tr>
             );
