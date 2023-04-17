@@ -90,9 +90,10 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
       <Tr
         backgroundColor="rgba(0,0,0,0.05)"
         textAlign="left"
+        padding="0 0.5vw 0 0.5vw"
       >
         <Th>Data de criação</Th>
-        <Th>Usuário</Th>
+        <Th width="200%">Usuário</Th>
         <Th>Fluxo</Th>
         <Th>Status</Th>
         <Th>Valor</Th>
@@ -101,9 +102,9 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
       {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
           return (
-            <Tr key={index} textAlign="left">
+            <Tr padding="0 0.5vw 0 0.5vw" key={index} textAlign="left">
               <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
-              <Td>{data.name}</Td>
+              <Td width="200%">{data.name}</Td>
               <Td>Pendente</Td>
               <Td>Entrada</Td>
               <Td>{data.value.toFixed(2)} R$</Td>
@@ -129,7 +130,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
           return (
             <Tr key={index} justifyContent="space-evenly" textAlign="center">
               <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
-              <Td>{data.name}</Td>
+              <Td width="200%">{data.name}</Td>
               <Td>Pendente</Td>
               <Td>Entrada</Td>
               <Td>{data.value.toFixed(2)} R$</Td>
