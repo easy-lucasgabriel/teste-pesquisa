@@ -1,4 +1,4 @@
-import { Select, Space } from "antd";
+import { Select } from "antd";
 import {
   Text,
   Input,
@@ -16,14 +16,13 @@ export const Financas = () => {
   const [dateInitial, setDateInitial] = useState("");
   const [dateFinal, setDateFinal] = useState("");
   const { lotteries, getTudo } = useLotteries();
-  const [premios, setPremios] = useState([]);
-  const [lotas, setLotas] = useState();
   const [email, setEmail] = useState<any>();
+  const [situacao, setSit] = useState<number>();
+  const [transacao, setTransacao] = useState<number>();
   const [id, setId] = useState<number>();
   const [search, setSearch] = useState("");
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
-  const { Option } = Select;
   const [min, setMin] = useState<number>();
   const [max, setMax] = useState<number>();
 
@@ -86,14 +85,6 @@ export const Financas = () => {
     getTudo();
   }, []);
 
-  const handleChangeLoterias = (value: any) => {
-    setLotas(value);
-  };
-
-  const handleChange = (value: any) => {
-    setPremios(value);
-  };
-
   function handleMinChange(name: number) {
     setMin(name);
   }
@@ -102,9 +93,19 @@ export const Financas = () => {
     setMax(name);
   }
 
-  const onSubmit = () => {
+  function handleTransChange(value: number) {
+    setTransacao(value);
+  }
+
+  function handleSitChange(value: number) {
+    setSit(value);
+  }
+
+  console.log(situacao, transacao);
+
+  const onSubmit = (ev: any) => {
     if (dateInitial && dateFinal) {
-      getAllDates(dateInitial, dateFinal, premios, lotas);
+      getAllDates(dateInitial, dateFinal, situacao, transacao);
     } else {
       window.alert("insira uma data inicial e uma final");
     }
