@@ -1,6 +1,6 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { Tr, Th, Td, Div, Button, Text } from "components";
+import { Tr, Th, Td, Div, Button, Text, Slide } from "components";
 import { Modal } from "antd";
 
 interface Transaction {
@@ -23,9 +23,10 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
   );
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<boolean[]>([]);
 
+
   useEffect(() => {
-  setIsTransactionModalOpen(Array(resultados.length).fill(false));
-}, [resultados]);
+    setIsTransactionModalOpen(Array(resultados.length).fill(false));
+  }, [resultados]);
 
 
   const filteredResultados = resultados.filter((data) => data.value >= min && data.value <= max);
@@ -63,7 +64,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
       return newState;
     });
   };
-  
+
   const handleCancel = (index: number) => {
     setIsTransactionModalOpen((prevState) => {
       const newState = [...prevState];
@@ -138,15 +139,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
               >
-                <Text
-                  textAlign="center"
-                  fontWeight="bolder"
-                  fontSize="20px"
-                >
-                  {data.name}
-                </Text>
-                <p>Número da Transação</p> <text>{data.id}</text>
-                <p>Nome do usuário</p> <text>{data.name}</text>
+                <Slide items={[data]} />
               </Modal>
             </Tr>
           );

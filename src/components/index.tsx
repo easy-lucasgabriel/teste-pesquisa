@@ -10,3 +10,4 @@ export * from './Table';
 export * from './Range';
 export * from './Error';
 export * from './Resumo';
+export * from './Slide';
