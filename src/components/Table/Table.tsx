@@ -46,7 +46,7 @@ export const Table = styled.table<TableProps>`
 export const Th = styled.th<TableProps>`
 display:flex;
 width:100%;
-padding:0.5vh;
+padding:0.1vh;
   ${layout}
   ${space}
 ${flexbox}
@@ -58,7 +58,6 @@ ${typography}
 export const Tr = styled.tr<TableProps>`
 display:flex;
 gap:10px;
-width:100%;
 ${layout}
 ${space}
 ${flexbox}
@@ -68,16 +67,15 @@ ${position}
 ${typography}
 `;
 export const Td = styled.td<TableProps>`
-${layout}
-${space}
+display:flex;
+width:100%;
+padding:0.1vh;
+flex-wrap:wrap;
+  ${layout}
+  ${space}
 ${flexbox}
 ${color}
 ${border}
 ${position}
 ${typography}
-width:100%;
-display:flex;
-flex-wrap:wrap;
-text-align:left;
-padding:0.5vh;
 `;

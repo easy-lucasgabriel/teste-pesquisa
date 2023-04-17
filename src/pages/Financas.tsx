@@ -23,7 +23,7 @@ export const Financas = () => {
   const transactions = [
     { id: 1, name: "Lucas Gabriel dos Santos", value: 20, date: new Date("2022-01-01") },
     { id: 2, name: "Maria do BBB", value: 100, date: new Date("2022-01-02") },
-    { id: 3, name: "Pedro Henrique", value: 35, date: new Date("2022-01-03") },
+    { id: 3, name: "Pedro Silveira da Cunha Neto" , value: 35, date: new Date("2022-01-03") },
     { id: 4, name: "João Paulo", value: 10, date: new Date("2022-01-04") },
   ];
 
