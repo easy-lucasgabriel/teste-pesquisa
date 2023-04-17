@@ -1,9 +1,9 @@
-import { BetTypes, Data, Financas, ResultadoFinancas } from "interfaces";
+import { Data, GamesData } from "interfaces";
 import { useCallback, useState } from "react";
 import { Dates } from "services";
 
 export const useDates = () => {
-  const [resultSearch,setResultSearch] = useState<BetTypes[]>([]);
+  const [resultSearch,setResultSearch] = useState<GamesData>({count: 0, results: []});
 
   const getAllDates = useCallback (async (dateInitial:string, dateFinal:string, premios:any, lotas:any) => {
     const { status, data } = await Dates.getDate(dateInitial, dateFinal, premios, lotas);

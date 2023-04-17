@@ -1,8 +1,3 @@
-export interface Financas {
-  count: number;
-  results: ResultadoFinancas[];
-}
-
 export interface ResultadoFinancas {
   id: number;
   created_date: string;

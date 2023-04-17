@@ -102,7 +102,7 @@ export const Financas = () => {
     setMax(name);
   }
 
-  const onSubmit = (ev: any) => {
+  const onSubmit = () => {
     if (dateInitial && dateFinal) {
       getAllDates(dateInitial, dateFinal, premios, lotas);
     } else {
