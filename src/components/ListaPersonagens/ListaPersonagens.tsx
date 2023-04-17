@@ -1,37 +1,74 @@
 import { useState } from "react";
-import { RootObject} from "interfaces";
+import { Data, ResultadoFinancas } from "interfaces";
 import dayjs from "dayjs";
 import { Tr, Th, Td, Div, Button } from "components";
+import { Modal } from "antd";
 
 interface ResultadosProps {
-  resultados: RootObject[];
+  resultados: Data;
+  min: any;
+  max: any;
 }
 
-export function ListaPersonagens({ resultados }: ResultadosProps) {
-  const [sortedNumbers, setSortedNumbers] = useState<RootObject[]>([]);
+export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
+  const [sortedTransactions, setSortedTransactions] = useState<ResultadoFinancas[]>([]);
+
+  const filteredResultados = resultados?.results.filter((data : any) => data.value >= min && data.value <= max);
+
+  function sortTransactions(a: any, b: any) {
+    if (sortOrder === "asc") {
+      return a.value - b.value;
+    } else {
+      return b.value - a.value;
+    }
+  }
+
 
   function handleSort() {
-    const sorted = resultados.slice().sort((a: any, b: any) => {
-      if (sortOrder === "asc") {
-        return a.value - b.value;
-      } else {
-        return b.value - a.value;
-      }
-    });
-    setSortedNumbers(sorted);
+    const sorted = filteredResultados.slice().sort(sortTransactions);
+    setSortedTransactions(sorted);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
+
+  function handleDateSort() {
+    const sorted = filteredResultados.slice().sort((a: any, b: any) => {
+      if (sortOrder === "asc") {
+        return dayjs(a.date).diff(b.date);
+      } else {
+        return dayjs(b.date).diff(a.date);
+      }
+    });
+    setSortedTransactions(sorted);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <Div flexDirection="column">
       <Tr
         backgroundColor="none"
-        justifyContent="space-evenly"
+        justifyContent="flex-end"
         textAlign="center"
       >
         <Button onClick={handleSort}>
-          Ordenar {sortOrder === "asc" ? "decrescente" : "crescente"}{" "}
+          valor{" "}
+        </Button>
+        <Button onClick={handleDateSort}>
+          data{" "}
         </Button>
       </Tr>
       <Tr
@@ -42,26 +79,37 @@ export function ListaPersonagens({ resultados }: ResultadosProps) {
         <Th>Email</Th>
         <Th>Valor total apostado</Th>
         <Th>Data da aposta</Th>
+        <Th>Resumo</Th>
       </Tr>
-      {sortedNumbers.length > 0
-        ? sortedNumbers.map((data, index) => {
+        {sortedTransactions.length > 0
+        ? sortedTransactions.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.data_content.sending.username}</Td>
-                <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td>{data.user}</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.created_date).format('DD-MM-YYYY')}</Td>
+                <Button onClick={showModal}>Abrir</Button>
+                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                  <p>{data.id}</p>
+                  <p>{data.user}</p>
+                </Modal>
               </Tr>
             );
           })
-        : resultados.map((data, index) => {
+        : filteredResultados.map((data : any, index : any) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.data_content.sending.username}</Td>
-                <Td>{data.data_content.sending.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td>{data.user}</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>{dayjs(data.created_date).format("DD-MM-YYYY")}</Td>
+                <Button onClick={showModal}>Abrir</Button>
+                                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                  <p>{data.id}</p>
+                  <p>{data.user}</p>
+                </Modal>
               </Tr>
             );
-          })}
+          }) }
     </Div>
   );
 }
