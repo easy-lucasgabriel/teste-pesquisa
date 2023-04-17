@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { RootObject} from "interfaces";
+import { RootObject } from "interfaces";
 import dayjs from "dayjs";
-import { Tr, Th, Td, Div, Button } from "components";
+import { Tr, Th, Td, Div, Button, Text } from "components";
 import { Modal } from "antd";
 
 interface Transaction {
@@ -51,7 +51,7 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
 
-  const valorAposta = filteredResultados.map((data) => {return data.value});
+  const valorAposta = filteredResultados.map((data) => { return data.value });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -91,35 +91,65 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
         <Th>Data da aposta</Th>
         <Th>Resumo</Th>
       </Tr>
-        {sortedTransactions.length > 0
+      {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
-            return (
-              <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.name}</Td>
-                <Td>{data.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
-                <Button onClick={showModal}>Abrir</Button>
-                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                  <p>{data.id}</p>
-                  <p>{data.name}</p>
-                </Modal>
-              </Tr>
-            );
-          })
+          return (
+            <Tr key={index} justifyContent="space-evenly" textAlign="center">
+              <Td>{data.name}</Td>
+              <Td>{data.value.toFixed(2)} R$</Td>
+              <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              <Td
+                onClick={showModal}
+              >Abrir
+              </Td>
+              <Modal
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={[
+                ]}
+              >
+                <Text
+                  textAlign="center"
+                >{data.name}
+                </Text>
+                <p>{data.id}</p>
+                <p>{data.name}</p>
+              </Modal>
+            </Tr>
+          );
+        })
         : filteredResultados.map((data, index) => {
-            return (
-              <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.name}</Td>
-                <Td>{data.value.toFixed(2)} R$</Td>
-                <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
-                <Button onClick={showModal}>Abrir</Button>
-                                <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                  <p>{data.id}</p>
-                  <p>{data.name}</p>
-                </Modal>
-              </Tr>
-            );
-          }) }
+          return (
+            <Tr key={index} justifyContent="space-evenly" textAlign="center">
+              <Td>{data.name}</Td>
+              <Td>{data.value.toFixed(2)} R$</Td>
+              <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              <Td
+                key={index}
+                onClick={showModal}
+                >
+                  Abrir</Td>
+              <Modal
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={[
+                ]}
+              >
+                <Text
+                  textAlign="center"
+                  fontWeight="bold"
+                  fontSize="20px"
+                >
+                  {data.name}
+                </Text>
+                <p>{data.id}</p>
+                <p>{data.name}</p>
+              </Modal>
+            </Tr>
+          );
+        })}
     </Div>
   );
 }
