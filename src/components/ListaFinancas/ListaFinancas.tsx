@@ -132,7 +132,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
               <Td>Pendente</Td>
               <Td>Entrada</Td>
               <Td>{data.value.toFixed(2)} R$</Td>
-              <Td onClick={() => showModal(index)}>Abrir</Td>
+              <Td onClick={() => showModal(index)}>abrir</Td>
               <Modal
                 open={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
