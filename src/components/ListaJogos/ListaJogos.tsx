@@ -70,28 +70,32 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
         justifyContent="space-evenly"
         textAlign="center"
       >
-        <Th>Email</Th>
-        <Th>Valor apostado</Th>
-        <Th>N° da Pule</Th>
         <Th>Data da aposta</Th>
+        <Th>Email</Th>
+        <Th>N° da Pule</Th>
+        <Th>Valor apostado</Th>
         <Th>Resultado</Th>
       </Tr>
       {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.name}</Td>
-                <Td>{data.value.toFixed(2)} R$</Td>
                 <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+                <Td>{data.name}</Td>
+                <Td>192837192837</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>Credit</Td>
               </Tr>
             );
           })
         : filteredResultados.map((data, index) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.name}</Td>
-                <Td>{data.value.toFixed(2)} R$</Td>
                 <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+                <Td>{data.name}</Td>
+                <Td>192837192837</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td>Credit</Td>
               </Tr>
             );
           })}

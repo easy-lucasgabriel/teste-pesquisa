@@ -5,7 +5,7 @@ export * from './Div';
 export * from './Button';
 export * from './Menu';
 export * from './ListaJogos';
-export * from './ListaPersonagens';
+export * from './ListaFinancas';
 export * from './Table';
 export * from './Range';
 export * from './Error';

@@ -16,7 +16,7 @@ interface ResultadosProps {
   max: any;
 }
 
-export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
+export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
     []
@@ -88,33 +88,38 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
       </Tr>
       <Tr
         backgroundColor="rgba(0,0,0,0.05)"
-        justifyContent="space-evenly"
-        textAlign="center"
+        textAlign="left"
       >
-        <Th>Email</Th>
-        <Th>Valor total apostado</Th>
-        <Th>Data da aposta</Th>
+        <Th>Data de criação</Th>
+        <Th>Usuário</Th>
+        <Th>Fluxo</Th>
+        <Th>Status</Th>
+        <Th>Valor</Th>
         <Th>Resumo</Th>
       </Tr>
       {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
           return (
-            <Tr key={index} justifyContent="space-evenly" textAlign="center">
-              <Td>{data.name}</Td>
-              <Td>{data.value.toFixed(2)} R$</Td>
+            <Tr key={index} textAlign="left">
               <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              <Td>{data.name}</Td>
+              <Td>Pendente</Td>
+              <Td>Entrada</Td>
+              <Td>{data.value.toFixed(2)} R$</Td>
               <Td onClick={() => showModal(index)}>Abrir</Td>
               <Modal
-                visible={isTransactionModalOpen[index]}
+                open={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
               >
                 <Text
                   textAlign="center"
+                  fontWeight="bolder"
+                  fontSize="20px"
                 >{data.name}
                 </Text>
-                <p>{data.id}</p>
-                <p>{data.name}</p>
+                <p>Número da Transação</p> <text>{data.id}</text>
+                <p>Nome do usuário</p> <text>{data.name}</text>
               </Modal>
             </Tr>
           );
@@ -122,24 +127,26 @@ export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
         : filteredResultados.map((data, index) => {
           return (
             <Tr key={index} justifyContent="space-evenly" textAlign="center">
-              <Td>{data.name}</Td>
-              <Td>{data.value.toFixed(2)} R$</Td>
               <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              <Td>{data.name}</Td>
+              <Td>Pendente</Td>
+              <Td>Entrada</Td>
+              <Td>{data.value.toFixed(2)} R$</Td>
               <Td onClick={() => showModal(index)}>Abrir</Td>
               <Modal
-                visible={isTransactionModalOpen[index]}
+                open={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
               >
                 <Text
                   textAlign="center"
-                  fontWeight="bold"
+                  fontWeight="bolder"
                   fontSize="20px"
                 >
                   {data.name}
                 </Text>
-                <p>{data.id}</p>
-                <p>{data.name}</p>
+                <p>Número da Transação</p> <text>{data.id}</text>
+                <p>Nome do usuário</p> <text>{data.name}</text>
               </Modal>
             </Tr>
           );

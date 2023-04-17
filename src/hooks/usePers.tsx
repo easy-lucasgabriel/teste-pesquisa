@@ -1,21 +1,21 @@
 import { RootObject } from "interfaces";
 import { useCallback, useState } from "react";
-import { Personagens } from "services";
+import { Financas } from "services";
 
 export const usePers = () => {
-  const [personagens,setPersonagens] = useState<RootObject[]>([]);
+  const [financas, setFinancas] = useState<RootObject[]>([]);
 
   const getAll = useCallback (async () => {
-    const { status, data } = await Personagens.getPers();
+    const { status, data } = await Financas.getFinancas();
 
     if (status !== 200) throw new Error();
 
-    setPersonagens(data);
+    setFinancas(data);
 
   },[]);
 
   return { 
-    personagens,
+    financas,
     getAll 
   };
 };

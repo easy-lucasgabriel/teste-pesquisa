@@ -1,5 +1,5 @@
 import { Select, Space } from 'antd';
-import { Text, Input, Div, Button, Table, Range, ListaPersonagens } from "components";
+import { Text, Input, Div, Button, Table, Range, ListaFinancas } from "components";
 import { useTooDates, useLotteries } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,10 +21,10 @@ export const Financas = () => {
   const [max, setMax] = useState<number>();
 
   const transactions = [
-    { id: 1, name: "Transaction 1", value: 20, date: new Date("2022-01-01") },
-    { id: 2, name: "Transaction 2", value: 100, date: new Date("2022-01-02") },
-    { id: 3, name: "Transaction 3", value: 35, date: new Date("2022-01-03") },
-    { id: 4, name: "Transaction 4", value: 10, date: new Date("2022-01-04") },
+    { id: 1, name: "Lucas Gabriel dos Santos", value: 20, date: new Date("2022-01-01") },
+    { id: 2, name: "Maria do BBB", value: 100, date: new Date("2022-01-02") },
+    { id: 3, name: "Pedro Henrique", value: 35, date: new Date("2022-01-03") },
+    { id: 4, name: "João Paulo", value: 10, date: new Date("2022-01-04") },
   ];
 
   const userEmail = [
@@ -110,7 +110,7 @@ export const Financas = () => {
     }
   };
 
-
+ console.log(id);
   return (
     <Div width="85%" flexDirection="column">
       <Div
@@ -205,7 +205,7 @@ export const Financas = () => {
                 }}
                 placeholder="Usuário"
                 onChange={handleChangeEmail}
-                value={email}
+                value={""}
               >
                 {busca.map((email) => (
                   <Option key={email.id} value={email.email}>
@@ -230,7 +230,7 @@ export const Financas = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista das Finanças</h2>
-            <ListaPersonagens min={min} max={max} resultados={transactions} />
+            <ListaFinancas min={min} max={max} resultados={transactions} />
           </Table>
         </Div>
       </Div>
