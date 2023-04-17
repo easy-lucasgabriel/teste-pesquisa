@@ -145,10 +145,34 @@ export const Financas = () => {
                   },
                   {
                     value: "2",
-                    label: "Pago",
+                    label: "Processamento",
                   },
                   {
                     value: "3",
+                    label: "Pago",
+                  },
+                  {
+                    value: "4",
+                    label: "Rejeitado",
+                  },
+                  {
+                    value: "6",
+                    label: "Devolvido",
+                  },
+                  {
+                    value: "7",
+                    label: "Baixado",
+                  },
+                  {
+                    value: "8",
+                    label: "Pendente",
+                  },
+                  {
+                    value: "11",
+                    label: "Liberado",
+                  },
+                  {
+                    value: '',
                     label: "Erro",
                   },
                 ]}

@@ -1,0 +1,44 @@
+[33ma39666a[m[33m ([m[1;36mHEAD -> [m[1;32mlucas[m[33m, [m[1;31morigin/lucas[m[33m)[m HEAD@{0}: checkout: moving from modal to lucas
+[33m774260d[m[33m ([m[1;31morigin/modal[m[33m, [m[1;32mmodal[m[33m)[m HEAD@{1}: commit: indexando os modais
+[33m8c5e1a4[m HEAD@{2}: checkout: moving from lucas to modal
+[33ma39666a[m[33m ([m[1;36mHEAD -> [m[1;32mlucas[m[33m, [m[1;31morigin/lucas[m[33m)[m HEAD@{3}: checkout: moving from main to lucas
+[33mdc12eb1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{4}: pull origin main: Fast-forward
+[33m1614ac1[m HEAD@{5}: checkout: moving from lucas to main
+[33ma39666a[m[33m ([m[1;36mHEAD -> [m[1;32mlucas[m[33m, [m[1;31morigin/lucas[m[33m)[m HEAD@{6}: commit: exclusão de arquivos não utilizados
+[33m212c59d[m HEAD@{7}: pull origin lucas: Fast-forward
+[33m6d136e9[m HEAD@{8}: checkout: moving from apidev to lucas
+[33md25e82c[m[33m ([m[1;31morigin/apidev[m[33m, [m[1;32mapidev[m[33m)[m HEAD@{9}: commit: filtros de entrada/saida e por status, e a separação dos botões de valores mínimos e máximos
+[33m6d136e9[m HEAD@{10}: checkout: moving from lucas to apidev
+[33m6d136e9[m HEAD@{11}: pull origin lucas: Fast-forward
+[33mcd92f72[m HEAD@{12}: pull origin lucas: Fast-forward
+[33m4cff1a3[m HEAD@{13}: checkout: moving from extra to lucas
+[33m968a044[m[33m ([m[1;31morigin/extra[m[33m, [m[1;32mextra[m[33m)[m HEAD@{14}: commit: organizando os parametros novos
+[33m4cff1a3[m HEAD@{15}: checkout: moving from lucas to extra
+[33m4cff1a3[m HEAD@{16}: commit: sincronizando a lógica de valor minimo e máximo para a lista de jogos
+[33m3d25226[m HEAD@{17}: commit: controlando os dados por valor minimo e máximos
+[33m7793aad[m HEAD@{18}: pull origin lucas: Fast-forward
+[33m6462936[m HEAD@{19}: commit: pesquisa com múltiplos parâmetros
+[33m623d6b5[m HEAD@{20}: pull origin lucas: Merge made by the 'ort' strategy.
+[33m8be020c[m HEAD@{21}: pull origin main: Merge made by the 'ort' strategy.
+[33m47f0c2f[m HEAD@{22}: reset: moving to HEAD
+[33m47f0c2f[m HEAD@{23}: commit: criação e junção do botão de filtragem por data
+[33ma9bd847[m HEAD@{24}: pull origin lucas: Fast-forward
+[33m7d53d7d[m HEAD@{25}: commit: estilização da tabela
+[33mae605bd[m HEAD@{26}: reset: moving to HEAD
+[33mae605bd[m HEAD@{27}: pull origin lucas: Fast-forward
+[33mda418cd[m HEAD@{28}: checkout: moving from dates to lucas
+[33m222c474[m[33m ([m[1;31morigin/dates[m[33m, [m[1;32mdates[m[33m)[m HEAD@{29}: checkout: moving from main to dates
+[33m1614ac1[m HEAD@{30}: pull: Fast-forward
+[33m028d0b8[m HEAD@{31}: checkout: moving from dates to main
+[33m222c474[m[33m ([m[1;31morigin/dates[m[33m, [m[1;32mdates[m[33m)[m HEAD@{32}: commit: criação inicial da lógica de pesquisa por datas
+[33mda418cd[m HEAD@{33}: checkout: moving from lucas to dates
+[33mda418cd[m HEAD@{34}: pull origin lucas: Fast-forward
+[33med21970[m HEAD@{35}: reset: moving to HEAD
+[33med21970[m HEAD@{36}: commit: criação da segunda lista
+[33m8fa591f[m HEAD@{37}: pull origin lucas: Fast-forward
+[33m39e6034[m HEAD@{38}: reset: moving to HEAD
+[33m39e6034[m HEAD@{39}: commit: estilização botão e mostrar todos os resultados
+[33mf991b76[m HEAD@{40}: commit: puxando informações e mostrando na tela através de pesquisa
+[33m42423ca[m HEAD@{41}: commit: estilização
+[33m028d0b8[m HEAD@{42}: checkout: moving from main to lucas
+[33m028d0b8[m HEAD@{43}: clone: from https://github.com/easy-lucasgabriel/teste-pesquisa.git
