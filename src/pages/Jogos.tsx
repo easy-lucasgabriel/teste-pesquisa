@@ -112,8 +112,8 @@ export const Jogos = () => {
     setMax(name)
   }
 
-  return (
-    <Div width="85%" flexDirection="column">
+  return(
+  <Div width="85%" flexDirection="column">
       <Div
         height="auto"
         width="90%"
@@ -128,54 +128,54 @@ export const Jogos = () => {
           width="100%"
           flexDirection="column"
         >
-          <Text fontWeight="600" color="rgba(10,10,10,.9)">
-            Lista de Pesquisa
-          </Text>
-          <Div
-            width="100%"
-            flexDirection="column"
-          >
-            <Div
-              width="50%">
+          <Div width="50%" flexDirection="column">
+            <Div width="80%">
+              <Div width="50%" flexDirection="column">
+                <Text color="grey">Data inicial</Text>
+                <Input
+                  placeholder="Data Inicial"
+                  width="90%"
+                  type="date"
+                  onChange={(e) => setDateInitial(e.target.value)}
+                />
+              </Div>
 
-              <Input
-                placeholder="Data Inicial"
-                width="50%"
-                type="date"
-                value={dateInitial}
-                onChange={(e) => setDateInitial(e.target.value)}
-              />
-              <Input
-                placeholder="Data Final"
-                width="50%"
-                type="date"
-                value={dateFinal}
-                onChange={(e) => setDateFinal(e.target.value)}
+              <Div width="50%" flexDirection="column">
+                <Text color="grey">Data final</Text>
+                <Input
+                  placeholder="Data Final"
+                  width="100%"
+                  type="date"
+                  onChange={(e) => setDateFinal(e.target.value)}
+                />
+              </Div>
+            </Div>
+
+            <Div width="50%" justifyContent="space-between">
+              <Range
+                onMinChange={handleMinChange}
+                onMaxChange={handleMaxChange}
               />
             </Div>
 
-            <Div
-              width="50%"
-              justifyContent="space-between">
-              <Range onMinChange={handleMinChange} onMaxChange={handleMaxChange} />
-            </Div>
-
-            <Div
-              width="100%"
-              justifyContent="flex-start"
-            >
+            <Div width="100%" justifyContent="flex-start">
               <Select
-                mode='multiple'
-                style={{ minWidth: '30%' }}
+                mode="multiple"
+                style={{ minWidth: "30%" }}
                 placeholder="Loterias"
                 onChange={handleChangeLoterias}
                 optionLabelProp="label"
               >
                 {loterias.map((loterias) => (
-                  <Option key={loterias.id} value={loterias.lottery_type} name={loterias.name}>
+                  <Option
+                    key={loterias.id}
+                    value={loterias.lottery_type}
+                    name={loterias.name}
+                  >
                     <Space>{loterias.lottery_type}</Space>
                   </Option>
-                ))};
+                ))}
+                ;
               </Select>
 
               <Select
@@ -186,33 +186,19 @@ export const Jogos = () => {
                 onChange={handleChange}
                 options={[
                   {
-                    value: '1',
-                    label: 'Winning',
+                    value: "1",
+                    label: "Winning",
                   },
                   {
-                    value: '0',
-                    label: 'Credit',
-                  }
+                    value: "0",
+                    label: "Credit",
+                  },
                 ]}
               />
 
-              <Select
-                showSearch
-                style={{
-                  width: 230
-                }}
-                placeholder="Usuário"
-                onChange={handleChangeEmail}
-                value={email}
-              >
-                {busca.map((email) => (
-                  <Option key={email.id} value={email.email}>
-                    <Space>{email.email}</Space>
-                  </Option>
-                ))}
-              </Select>
-
-              <Button type="submit" onClick={onSubmit}>OK</Button>
+              <Button type="submit" onClick={onSubmit}>
+                OK
+              </Button>
             </Div>
           </Div>
         </Div>

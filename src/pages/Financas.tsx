@@ -111,128 +111,142 @@ export const Financas = () => {
   };
 
   return (
-    <Div width="85%" flexDirection="column">
-      <Div
-        height="auto"
-        width="90%"
-        alignItems="center"
-        margin="0 auto"
-        border="1px solid rgba(0,0,0,.2)"
-        padding="1%"
-        backgroundColor="rgba(255,255,255,.9)"
-      >
+      <Div width="85%" flexDirection="column">
         <Div
-          onSubmit={handleSubmit(onSubmit)}
-          width="100%"
-          flexDirection="column"
+          height="auto"
+          width="90%"
+          alignItems="center"
+          margin="0 auto"
+          border="1px solid rgba(0,0,0,.2)"
+          padding="1%"
+          backgroundColor="rgba(255,255,255,.9)"
         >
-          <Text fontWeight="600" color="rgba(10,10,10,.9)">
-            Lista de Pesquisa
-          </Text>
-          <Div width="100%" flexDirection="column">
-            <Div width="50%">
-              <Input
-                placeholder="Data Inicial"
-                width="50%"
-                type="date"
-                value={dateInitial}
-                {...register("dateInitial")}
-                onChange={(e) => setDateInitial(e.target.value)}
-              />
-
-              <Input
-                placeholder="Data Final"
-                width="50%"
-                type="date"
-                value={dateFinal}
-                {...register("dateFinal")}
-                onChange={(e) => setDateFinal(e.target.value)}
-              />
-            </Div>
-
-            <Div width="50%" justifyContent="space-between">
-              <Range
-                onMinChange={handleMinChange}
-                onMaxChange={handleMaxChange}
-              />
-            </Div>
-
-            <Div width="100%" justifyContent="flex-start">
-              <Select
-                mode="multiple"
-                style={{ minWidth: "30%" }}
-                placeholder="Loterias"
-                onChange={handleChangeLoterias}
-                optionLabelProp="label"
-              >
-                {lotteries.map((loterias: any) => (
-                  <Option
-                    key={loterias.id}
-                    value={loterias.lottery_type}
-                    name={loterias.name}
-                  >
-                    <Space>{loterias.lottery_type}</Space>
-                  </Option>
-                ))}
-                ;
-              </Select>
-
-              <Select
-                placeholder="Premiada"
-                style={{
-                  width: 120,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "1",
-                    label: "Entrada",
-                  },
-                  {
-                    value: "2",
-                    label: "Saida",
-                  },
-                ]}
-              />
-
-              <Select
-                showSearch
-                style={{
-                  width: 230,
-                }}
-                placeholder="Usuário"
-                onChange={handleChangeEmail}
-                value={email}
-              >
-                {busca.map((email) => (
-                  <Option key={email.id} value={email.email}>
-                    <Space>{email.email}</Space>
-                  </Option>
-                ))}
-              </Select>
-
-              <Button type="submit" onClick={onSubmit}>
-                OK
-              </Button>
+          <Div
+            onSubmit={handleSubmit(onSubmit)}
+            width="100%"
+            flexDirection="column"
+          >
+  
+            <Div width="50%" flexDirection="column">
+              <Div width="80%">
+  
+                <Div width="50%" flexDirection="column">
+                  <Text color="grey">Data inicial</Text>
+                  <Input
+                    placeholder="Data Inicial"
+                    width="90%"
+                    type="date"
+                    {...register("dateInitial")}
+                    onChange={(e) => setDateInitial(e.target.value)}
+                  />
+                </Div>
+  
+                <Div width="50%" flexDirection="column">
+                <Text color="grey">Data final</Text>
+                  <Input
+                    placeholder="Data Final"
+                    width="100%"
+                    type="date"
+                    {...register("dateFinal")}
+                    onChange={(e) => setDateFinal(e.target.value)}
+                  />
+                </Div>
+              </Div>
+  
+              <Div height="20%">
+                <Range
+                  onMinChange={handleMinChange}
+                  onMaxChange={handleMaxChange}
+                />
+              </Div>
+  
+              <Div width="100%" justifyContent="flex-start">
+                <Select
+                  placeholder="Transação"
+                  style={{
+                    width: 120,
+                  }}
+                  onChange={handleTransChange}
+                  options={[
+                    {
+                      value: "1",
+                      label: "Entrada",
+                    },
+                    {
+                      value: "2",
+                      label: "Saida",
+                    },
+                  ]}
+                />
+  
+                <Select
+                  placeholder="Situação"
+                  style={{
+                    width: 120,
+                  }}
+                  onChange={handleSitChange}
+                  options={[
+                    {
+                      value: "1",
+                      label: "Pendente",
+                    },
+                    {
+                      value: "2",
+                      label: "Processamento",
+                    },
+                    {
+                      value: "3",
+                      label: "Pago",
+                    },
+                    {
+                      value: "4",
+                      label: "Rejeitado",
+                    },
+                    {
+                      value: "6",
+                      label: "Devolvido",
+                    },
+                    {
+                      value: "7",
+                      label: "Baixado",
+                    },
+                    {
+                      value: "8",
+                      label: "Pendente",
+                    },
+                    {
+                      value: "11",
+                      label: "Liberado",
+                    },
+                    {
+                      value: '',
+                      label: "Erro",
+                    },
+                  ]}
+                />
+  
+                <Button type="submit" onClick={onSubmit}>
+                  OK
+                </Button>
+              </Div>
             </Div>
           </Div>
         </Div>
-      </Div>
-
-      <Div
-        justifyContent="center"
-        height="auto"
-        margin="0 auto"
-        width="92%"
-        backgroundColor="rgba(255,255,255,.9)"
-      >
-        <Div minHeight="85vh" alignItems="center">
-          <Table flexDirection="column">
-            <h2>Lista das Finanças</h2>
-            <ListaPersonagens min={min} max={max} resultados={resultSearch} />
-          </Table>
+  
+        <Div
+          justifyContent="center"
+          height="auto"
+          margin="0 auto"
+          width="92%"
+          backgroundColor="rgba(255,255,255,.9)"
+        >
+          <Div minHeight="85vh" alignItems="center">
+            <Table flexDirection="column">
+              <h2>Lista das Finanças</h2>
+              <ListaPersonagens min={min} max={max} resultados={resultSearch} />
+            </Table>
+          </Div>
         </Div>
       </Div>
-    </Div>
-  );
+    );
 };
