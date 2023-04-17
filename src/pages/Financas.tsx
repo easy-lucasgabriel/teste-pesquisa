@@ -6,7 +6,7 @@ import {
   Button,
   Table,
   Range,
-  ListaPersonagens,
+  ListaFinancas,
 } from "components";
 import { useTooDates, useLotteries } from "hooks";
 import { useEffect, useState } from "react";
@@ -244,7 +244,7 @@ export const Financas = () => {
           <Div minHeight="85vh" alignItems="center">
             <Table flexDirection="column">
               <h2>Lista das Finanças</h2>
-              <ListaPersonagens min={min} max={max} resultados={resultSearch} />
+              <ListaFinancas min={min} max={max} resultados={resultSearch} />
             </Table>
           </Div>
         </Div>

@@ -1,10 +1,11 @@
-import { Div, Tr, Th, Td, Button } from "components";
+import { Modal } from "antd";
+import { Div, Tr, Th, Td, Button, Text } from "components";
 import dayjs from "dayjs";
 import { BetTypes, GamesData } from "interfaces";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ResultadosProps {
-  results: GamesData;
+  results: GamesData | any;
   min: any;
   max: any;
 }
@@ -12,9 +13,16 @@ interface ResultadosProps {
 export function ListaJogos({ results, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState<BetTypes[]>([]);
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<
+    boolean[]
+  >([]);
+
+  useEffect(() => {
+    setIsTransactionModalOpen(Array(results.length).fill(false));
+  }, [results]);
 
   const filteredResultados = results?.results.filter(
-    (data) => data.total_value >= min && data.total_value <= max
+    (data: BetTypes) => data.total_value >= min && data.total_value <= max
   );
 
   function sortTransactions(a: BetTypes, b: BetTypes) {
@@ -45,6 +53,22 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
 
+  const showModal = (index: number) => {
+    setIsTransactionModalOpen((prevState) => {
+      const newState = [...prevState];
+      newState[index] = true;
+      return newState;
+    });
+  };
+
+  const handleCancel = (index: number) => {
+    setIsTransactionModalOpen((prevState) => {
+      const newState = [...prevState];
+      newState[index] = false;
+      return newState;
+    });
+  };
+
   return (
     <Div flexDirection="column">
       <Tr backgroundColor="none" justifyContent="flex-end" textAlign="center">
@@ -53,31 +77,57 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
       </Tr>
       <Tr
         backgroundColor="rgba(0,0,0,0.05)"
-        justifyContent="space-evenly"
-        textAlign="center"
+        textAlign="left"
+        padding="0 0.5vw 0 0.5vw"
       >
-        <Th>Email</Th>
-        <Th>Valor apostado</Th>
-        <Th>N° da Pule</Th>
         <Th>Data da aposta</Th>
+        <Th width="200%">Email</Th>
+        <Th>N° da Pule</Th>
+        <Th>Valor apostado</Th>
         <Th>Resultado</Th>
       </Tr>
       {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
             return (
-              <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.username}</Td>
-                <Td>{data.total_value.toFixed(2)} R$</Td>
+              <Tr padding="0 0.5vw 0 0.5vw" key={index} textAlign="left">
                 <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td width="200%">{data.username}</Td>
+                <Td>{data.reg_number}</Td>
+                <Td>{data.total_value.toFixed(2)} R$</Td>
+                <Td onClick={() => showModal(index)}>Abrir</Td>
+                <Modal
+                  open={isTransactionModalOpen[index]}
+                  onOk={() => handleCancel(index)}
+                  onCancel={() => handleCancel(index)}
+                >
+                  <Text textAlign="center" fontWeight="bolder" fontSize="20px">
+                    {data.username}
+                  </Text>
+                  <p>Id usuário</p> <text>{data.user_id}</text>
+                  <p>Nome do usuário</p> <text>{data.username}</text>
+                </Modal>
               </Tr>
             );
           })
-        : filteredResultados.map((data, index) => {
+        : filteredResultados.map((data: BetTypes, index: number) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
-                <Td>{data.username}</Td>
-                <Td>{data.total_value.toFixed(2)} R$</Td>
                 <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td width="200%">{data.username}</Td>
+                <Td>{data.reg_number}</Td>
+                <Td>{data.total_value.toFixed(2)} R$</Td>
+                <Td onClick={() => showModal(index)}>Abrir</Td>
+                <Modal
+                  open={isTransactionModalOpen[index]}
+                  onOk={() => handleCancel(index)}
+                  onCancel={() => handleCancel(index)}
+                >
+                  <Text textAlign="center" fontWeight="bolder" fontSize="20px">
+                    {data.username}
+                  </Text>
+                  <p>Id usuário</p> <text>{data.user_id}</text>
+                  <p>Nome do usuário</p> <text>{data.username}</text>
+                </Modal>
               </Tr>
             );
           })}
