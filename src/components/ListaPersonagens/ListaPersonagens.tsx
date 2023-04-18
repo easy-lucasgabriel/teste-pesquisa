@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState,useEffect } from "react";
 import dayjs from "dayjs";
-import { Tr, Th, Td, Div, Button, Text, Slide } from "components";
+import { Tr, Th, Td, Div, Button, Text } from "components";
 import { Modal } from "antd";
 
 interface Transaction {
@@ -16,7 +16,7 @@ interface ResultadosProps {
   max: any;
 }
 
-export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
+export function ListaPersonagens({ resultados, min, max }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
     []
@@ -24,8 +24,8 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<boolean[]>([]);
 
   useEffect(() => {
-    setIsTransactionModalOpen(Array(resultados.length).fill(false));
-  }, [resultados]);
+  setIsTransactionModalOpen(Array(resultados.length).fill(false));
+}, [resultados]);
 
 
   const filteredResultados = resultados.filter((data) => data.value >= min && data.value <= max);
@@ -63,7 +63,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
       return newState;
     });
   };
-
+  
   const handleCancel = (index: number) => {
     setIsTransactionModalOpen((prevState) => {
       const newState = [...prevState];
@@ -88,39 +88,33 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
       </Tr>
       <Tr
         backgroundColor="rgba(0,0,0,0.05)"
-        textAlign="left"
-        padding="0 0.5vw 0 0.5vw"
+        justifyContent="space-evenly"
+        textAlign="center"
       >
-        <Th>Data de criação</Th>
-        <Th width="200%">Usuário</Th>
-        <Th>Fluxo</Th>
-        <Th>Status</Th>
-        <Th>Valor</Th>
+        <Th>Email</Th>
+        <Th>Valor total apostado</Th>
+        <Th>Data da aposta</Th>
         <Th>Resumo</Th>
       </Tr>
       {sortedTransactions.length > 0
         ? sortedTransactions.map((data, index) => {
           return (
-            <Tr padding="0 0.5vw 0 0.5vw" key={index} textAlign="left">
-              <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
-              <Td width="200%">{data.name}</Td>
-              <Td>Pendente</Td>
-              <Td>Entrada</Td>
+            <Tr key={index} justifyContent="space-evenly" textAlign="center">
+              <Td>{data.name}</Td>
               <Td>{data.value.toFixed(2)} R$</Td>
+              <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
               <Td onClick={() => showModal(index)}>Abrir</Td>
               <Modal
-                open={isTransactionModalOpen[index]}
+                visible={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
               >
                 <Text
                   textAlign="center"
-                  fontWeight="bolder"
-                  fontSize="20px"
                 >{data.name}
                 </Text>
-                <p>Número da Transação</p> <text>{data.id}</text>
-                <p>Nome do usuário</p> <text>{data.name}</text>
+                <p>{data.id}</p>
+                <p>{data.name}</p>
               </Modal>
             </Tr>
           );
@@ -128,18 +122,24 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
         : filteredResultados.map((data, index) => {
           return (
             <Tr key={index} justifyContent="space-evenly" textAlign="center">
-              <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
-              <Td width="200%">{data.name}</Td>
-              <Td>Pendente</Td>
-              <Td>Entrada</Td>
+              <Td>{data.name}</Td>
               <Td>{data.value.toFixed(2)} R$</Td>
-              <Td onClick={() => showModal(index)}>abrir</Td>
+              <Td>{dayjs(data.date).format("DD/MM/YYYY")}</Td>
+              <Td onClick={() => showModal(index)}>Abrir</Td>
               <Modal
-                open={isTransactionModalOpen[index]}
+                visible={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
               >
-                <Slide/>
+                <Text
+                  textAlign="center"
+                  fontWeight="bold"
+                  fontSize="20px"
+                >
+                  {data.name}
+                </Text>
+                <p>{data.id}</p>
+                <p>{data.name}</p>
               </Modal>
             </Tr>
           );
