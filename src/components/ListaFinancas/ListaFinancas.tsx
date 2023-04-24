@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { Tr, Th, Td, Div, Button, Text, Slide } from "components";
+import { Tr, Th, Td, Div, Button, Text } from "components";
 import { Modal } from "antd";
 
 interface Transaction {
@@ -22,6 +22,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
     []
   );
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<boolean[]>([]);
+  const [activeScreen, setActiveScreen] = useState(0);
 
   useEffect(() => {
     setIsTransactionModalOpen(Array(resultados.length).fill(false));
@@ -72,6 +73,10 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
     });
   };
 
+  function handleSlide() {
+    setActiveScreen(activeScreen === 0 ? 1 : 0);
+  }
+
   return (
     <Div flexDirection="column">
       <Tr
@@ -112,15 +117,27 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
                 open={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
+                footer={[]}
               >
-                <Text
-                  textAlign="center"
-                  fontWeight="bolder"
-                  fontSize="20px"
-                >{data.name}
-                </Text>
-                <p>Número da Transação</p> <text>{data.id}</text>
-                <p>Nome do usuário</p> <text>{data.name}</text>
+                <Div
+                  style={{
+                    flex: 1,
+                    display: activeScreen === 0 ? "block" : "none",
+                    textAlign: "center"
+                  }}
+                >
+                  <Button onClick={handleSlide}>Button para Div 2</Button>
+                </Div>
+
+                <Div
+                  style={{
+                    flex: 1,
+                    display: activeScreen === 1 ? "block" : "none",
+                    textAlign: "center"
+                  }}
+                >
+                  <Button onClick={handleSlide}>Button para Div 1</Button>
+                </Div>
               </Modal>
             </Tr>
           );
@@ -138,8 +155,27 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
                 open={isTransactionModalOpen[index]}
                 onOk={() => handleCancel(index)}
                 onCancel={() => handleCancel(index)}
+                footer={[]}
               >
-                <Slide/>
+                <Div
+                  style={{
+                    flex: 1,
+                    display: activeScreen === 0 ? "block" : "none",
+                    textAlign: "center"
+                  }}
+                >
+                  <Button onClick={handleSlide}>Button para Div 2</Button>
+                </Div>
+
+                <Div
+                  style={{
+                    flex: 1,
+                    display: activeScreen === 1 ? "block" : "none",
+                    textAlign: "center"
+                  }}
+                >
+                  <Button onClick={handleSlide}>Button para Div 1</Button>
+                </Div>
               </Modal>
             </Tr>
           );
