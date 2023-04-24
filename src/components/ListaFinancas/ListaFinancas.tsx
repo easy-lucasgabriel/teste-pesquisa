@@ -1,27 +1,38 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { Tr, Th, Td, Div, Button, Text } from "components";
 import { Modal } from "antd";
-import { Data,ResultadoFinancas } from "interfaces";
+import { Data, ResultadoFinancas } from "interfaces";
+import ReactLoading from "react-loading";
 
 interface ResultadosProps {
   resultados: Data | any;
-  min: any;
-  max: any;
+  min: number;
+  max: number;
+  loading: boolean;
 }
 
-export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
+export function ListaFinancas({
+  resultados,
+  min,
+  max,
+  loading,
+}: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
-  const [sortedTransactions, setSortedTransactions] = useState<ResultadoFinancas[]>(
-    []
-  );
-  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<boolean[]>([]);
+  const [sortedTransactions, setSortedTransactions] = useState<
+    ResultadoFinancas[]
+  >([]);
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<
+    boolean[]
+  >([]);
 
   useEffect(() => {
-  setIsTransactionModalOpen(Array(resultados.length).fill(false));
-}, [resultados]);
+    setIsTransactionModalOpen(Array(resultados.length).fill(false));
+  }, [resultados]);
 
-  const filteredResultados = resultados?.results.filter((data : ResultadoFinancas) => data.value >= min && data.value <= max);
+  const filteredResultados = resultados?.results.filter(
+    (data: ResultadoFinancas) => data.value >= min && data.value <= max
+  );
 
   function sortTransactions(a: ResultadoFinancas, b: ResultadoFinancas) {
     if (sortOrder === "asc") {
@@ -56,7 +67,7 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
       return newState;
     });
   };
-  
+
   const handleCancel = (index: number) => {
     setIsTransactionModalOpen((prevState) => {
       const newState = [...prevState];
@@ -67,17 +78,9 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
 
   return (
     <Div flexDirection="column">
-      <Tr
-        backgroundColor="none"
-        justifyContent="flex-end"
-        textAlign="center"
-      >
-        <Button onClick={handleSort}>
-          valor{" "}
-        </Button>
-        <Button onClick={handleDateSort}>
-          data{" "}
-        </Button>
+      <Tr backgroundColor="none" justifyContent="flex-end" textAlign="center">
+        <Button onClick={handleSort}>valor </Button>
+        <Button onClick={handleDateSort}>data </Button>
       </Tr>
       <Tr
         backgroundColor="rgba(0,0,0,0.05)"
@@ -91,60 +94,63 @@ export function ListaFinancas({ resultados, min, max }: ResultadosProps) {
         <Th>Valor</Th>
         <Th>Resumo</Th>
       </Tr>
-      {sortedTransactions.length > 0
-        ? sortedTransactions.map((data, index) => {
-          return (
-            <Tr padding="0 0.5vw 0 0.5vw" key={index} textAlign="left">
-              <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
-              <Td width="200%">{data.user}</Td>
-              <Td>Pendente</Td>
-              <Td>Entrada</Td>
-              <Td>{data.value.toFixed(2)} R$</Td>
-              <Td onClick={() => showModal(index)}>Abrir</Td>
-              <Modal
-                open={isTransactionModalOpen[index]}
-                onOk={() => handleCancel(index)}
-                onCancel={() => handleCancel(index)}
-              >
-                <Text
-                  textAlign="center"
-                  fontWeight="bolder"
-                  fontSize="20px"
-                >{data.user}
-                </Text>
-                <p>Número da Transação</p> <text>{data.id}</text>
-                <p>Nome do usuário</p> <text>{data.user}</text>
-              </Modal>
-            </Tr>
-          );
-        })
-        : filteredResultados.map((data : ResultadoFinancas , index : number) => {
-          return (
-            <Tr key={index} justifyContent="space-evenly" textAlign="center">
-              <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
-              <Td width="200%">{data.user}</Td>
-              <Td>Pendente</Td>
-              <Td>Entrada</Td>
-              <Td>{data.value.toFixed(2)} R$</Td>
-              <Td onClick={() => showModal(index)}>abrir</Td>
-              <Modal
-                open={isTransactionModalOpen[index]}
-                onOk={() => handleCancel(index)}
-                onCancel={() => handleCancel(index)}
-              >
-                <Text
-                  textAlign="center"
-                  fontWeight="bolder"
-                  fontSize="20px"
+      {resultados.length > 0 ? (
+        sortedTransactions.length > 0 ? (
+          sortedTransactions.map((data, index) => {
+            return (
+              <Tr padding="0 0.5vw 0 0.5vw" key={index} textAlign="left">
+                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td width="200%">{data.user}</Td>
+                <Td>Pendente</Td>
+                <Td>Entrada</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td onClick={() => showModal(index)}>Abrir</Td>
+                <Modal
+                  open={isTransactionModalOpen[index]}
+                  onOk={() => handleCancel(index)}
+                  onCancel={() => handleCancel(index)}
                 >
-                  {data.user}
-                </Text>
-                <p>Número da Transação</p> <text>{data.id}</text>
-                <p>Nome do usuário</p> <text>{data.user}</text>
-              </Modal>
-            </Tr>
-          );
-        })}
+                  <Text textAlign="center" fontWeight="bolder" fontSize="20px">
+                    {data.user}
+                  </Text>
+                  <p>Número da Transação</p> <text>{data.id}</text>
+                  <p>Nome do usuário</p> <text>{data.user}</text>
+                </Modal>
+              </Tr>
+            );
+          })
+        ) : (
+          filteredResultados.map((data: ResultadoFinancas, index: number) => {
+            return (
+              <Tr key={index} justifyContent="space-evenly" textAlign="center">
+                <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
+                <Td width="200%">{data.user}</Td>
+                <Td>Pendente</Td>
+                <Td>Entrada</Td>
+                <Td>{data.value.toFixed(2)} R$</Td>
+                <Td onClick={() => showModal(index)}>abrir</Td>
+                <Modal
+                  open={isTransactionModalOpen[index]}
+                  onOk={() => handleCancel(index)}
+                  onCancel={() => handleCancel(index)}
+                >
+                  <Text textAlign="center" fontWeight="bolder" fontSize="20px">
+                    {data.user}
+                  </Text>
+                  <p>Número da Transação</p> <text>{data.id}</text>
+                  <p>Nome do usuário</p> <text>{data.user}</text>
+                </Modal>
+              </Tr>
+            );
+          })
+        )
+      ) : loading ? (
+        <Div justifyContent="center" marginTop="5%">
+          <ReactLoading type='spin' color="gray" height="5%" width="5%" />
+        </Div>
+      ) : (
+        <></>
+      )}
     </Div>
   );
 }

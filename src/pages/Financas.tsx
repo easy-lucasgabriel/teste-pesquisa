@@ -11,6 +11,8 @@ import {
 import { useTooDates, useLotteries } from "hooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Financas = () => {
   const [dateInitial, setDateInitial] = useState("");
@@ -23,8 +25,9 @@ export const Financas = () => {
   const [search, setSearch] = useState("");
   const { register, handleSubmit } = useForm();
   const { resultSearch, getAllDates } = useTooDates();
-  const [min, setMin] = useState<number>();
-  const [max, setMax] = useState<number>();
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
 
   const userEmail = [
     { id: 1, email: "andremerli74@gmail.com	" },
@@ -101,18 +104,19 @@ export const Financas = () => {
     setSit(value);
   }
 
-  console.log(situacao, transacao);
+  const onSubmit = () => {
 
-  const onSubmit = (ev: any) => {
-    if (dateInitial && dateFinal) {
-      getAllDates(dateInitial, dateFinal, situacao, transacao);
-    } else {
-      window.alert("insira uma data inicial e uma final");
-    }
+      if (dateInitial && dateFinal){
+        getAllDates(dateInitial,dateFinal,transacao,situacao);
+        setLoading(true);
+      } else {
+        toast.error('Insira uma data inicial e uma data final!')
+      }
   };
 
   return (
       <Div width="85%" flexDirection="column">
+        <ToastContainer />
         <Div
           height="auto"
           width="90%"
@@ -244,7 +248,7 @@ export const Financas = () => {
           <Div minHeight="85vh" alignItems="center">
             <Table flexDirection="column">
               <h2>Lista das Finanças</h2>
-              <ListaFinancas min={min} max={max} resultados={resultSearch} />
+              <ListaFinancas min={min} max={max} resultados={resultSearch} loading={loading} />
             </Table>
           </Div>
         </Div>

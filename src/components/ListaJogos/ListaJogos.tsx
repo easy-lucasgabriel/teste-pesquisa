@@ -3,14 +3,16 @@ import { Div, Tr, Th, Td, Button, Text } from "components";
 import dayjs from "dayjs";
 import { BetTypes, GamesData } from "interfaces";
 import { useState, useEffect } from "react";
+import ReactLoading from "react-loading";
 
 interface ResultadosProps {
   results: GamesData | any;
   min: any;
   max: any;
+  loading: boolean;
 }
 
-export function ListaJogos({ results, min, max }: ResultadosProps) {
+export function ListaJogos({ results, min, max, loading }: ResultadosProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState<BetTypes[]>([]);
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<
@@ -86,8 +88,9 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
         <Th>Valor apostado</Th>
         <Th>Resultado</Th>
       </Tr>
-      {sortedTransactions.length > 0
-        ? sortedTransactions.map((data, index) => {
+      {results.length > 0 ? (
+        sortedTransactions.length > 0 ? (
+          sortedTransactions.map((data, index) => {
             return (
               <Tr padding="0 0.5vw 0 0.5vw" key={index} textAlign="left">
                 <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
@@ -109,7 +112,8 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
               </Tr>
             );
           })
-        : filteredResultados.map((data: BetTypes, index: number) => {
+        ) : (
+          filteredResultados.map((data: BetTypes, index: number) => {
             return (
               <Tr key={index} justifyContent="space-evenly" textAlign="center">
                 <Td>{dayjs(data.created_date).format("DD/MM/YYYY")}</Td>
@@ -130,7 +134,15 @@ export function ListaJogos({ results, min, max }: ResultadosProps) {
                 </Modal>
               </Tr>
             );
-          })}
+          })
+        )
+      ) : loading ? (
+        <Div justifyContent="center" marginTop="5%">
+          <ReactLoading type="spin" color="gray" height="5%" width="5%" />
+        </Div>
+      ) : (
+        <></>
+      )}
     </Div>
   );
 }

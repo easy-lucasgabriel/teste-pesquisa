@@ -4,6 +4,8 @@ import { useDates } from "hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loterias } from "interfaces";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Jogos = () => {
   const [loterias, setLoterias] = useState<Loterias[]>([]);
@@ -19,6 +21,7 @@ export const Jogos = () => {
   const [min, setMin] = useState<number>();
   const [max, setMax] = useState<number>();
   const { handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const userEmail = [
     { id: 1, email: "andremerli74@gmail.com	" },
@@ -86,8 +89,9 @@ export const Jogos = () => {
   const onSubmit = () => {
     if (dateInitial && dateFinal) {
       getAllDates(dateInitial, dateFinal, premios, lotas, id);
+      setLoading(true)
     } else {
-      window.alert("insira uma data inicial e uma final");
+      toast.error("Insira uma data inicial e uma data final!");
     }
   };
 
@@ -101,6 +105,7 @@ export const Jogos = () => {
 
   return (
     <Div width="85%" flexDirection="column">
+      <ToastContainer />
       <Div
         height="auto"
         width="90%"
@@ -217,7 +222,7 @@ export const Jogos = () => {
         <Div minHeight="85vh" alignItems="center">
           <Table flexDirection="column">
             <h2>Lista dos Jogos</h2>
-            <ListaJogos min={min} max={max} results={resultSearch} />
+            <ListaJogos min={min} max={max} results={resultSearch} loading={loading}/>
             <Pagination defaultCurrent={0} total={50} />
           </Table>
         </Div>
