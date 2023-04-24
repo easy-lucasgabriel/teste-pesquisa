@@ -7,8 +7,8 @@ import ReactLoading from "react-loading";
 
 interface ResultadosProps {
   results: GamesData | any;
-  min: any;
-  max: any;
+  min: number;
+  max: number;
   loading: boolean;
 }
 
