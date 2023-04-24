@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { Div } from "components";
 
 interface Props {
   onMinChange: (min: number) => void;
@@ -7,9 +8,9 @@ interface Props {
 }
 
 export const Wrapper = styled.div`
-    display: flex;
-    width: 100%;
-    gap:0.5vw;
+  display: flex;
+  width: 100%;
+  gap: 0.5vw;
 `;
 
 export const InputNumber = styled.input`
@@ -35,24 +36,31 @@ export const InputNumber = styled.input`
 `;
 
 export function Range({ onMinChange, onMaxChange }: Props) {
-  const [max, setMax] = useState(0);
-  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
+  const [min, setMin] = useState(10);
   onMinChange(min);
   onMaxChange(max);
 
   return (
     <Wrapper>
-          <InputNumber
-            placeholder="Valor mínimo"
-            type="number"
-            onChange={(e: any) => setMin(e.target.value)}
-          />
-
-          <InputNumber
-            placeholder="Valor máximo"
-            type="number"
-            onChange={(e: any) => setMax(e.target.value)}
-          />
+      <Div flexDirection="column">
+        <p style={{ color: "gray" }}>Valor mínimo</p>
+        <InputNumber
+          placeholder="Valor mínimo"
+          type="number"
+          value={min}
+          onChange={(e: any) => setMin(e.target.value)}
+        />
+      </Div>
+      <Div flexDirection="column">
+        <p style={{ color: "gray" }}>Valor máximo</p>
+        <InputNumber
+          placeholder="Valor máximo"
+          type="number"
+          value={max}
+          onChange={(e: any) => setMax(e.target.value)}
+        />
+      </Div>
     </Wrapper>
   );
 }

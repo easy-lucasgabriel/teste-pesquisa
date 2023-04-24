@@ -18,8 +18,8 @@ export const Jogos = () => {
   const [search, setSearch] = useState("");
   const { resultSearch, getAllDates } = useDates();
   const { Option } = Select;
-  const [min, setMin] = useState<number>();
-  const [max, setMax] = useState<number>();
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] = useState<number>(0);
   const { handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
 
