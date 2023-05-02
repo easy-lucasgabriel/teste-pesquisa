@@ -19,18 +19,18 @@ export const Atendimento = () => {
                     flexDirection="column"
                 >
                     <Text fontWeight="600" color="rgba(10,10,10,.9)">
-                        Lista de Pesquisa
+                        Menu de Atendimento
                     </Text>
                     <Div
                         width="100%"
                         flexDirection="column"
                     >
                         <Div
-                            width="50%">
+                            width="80%">
 
                             <Input
                                 placeholder="Insira um dado sobre o usuario"
-                                width="50%"
+                                width="80%"
                             // value={}
                             />
                             <Button type="submit">Pesquisar</Button>
@@ -46,14 +46,14 @@ export const Atendimento = () => {
                 width="92%"
                 backgroundColor="rgba(255,255,255,.9)"
             >
-                <Div minHeight="85vh" alignItems="center">
-                    <Table flexDirection="column">
+                <Div minHeight="40vh" alignItems="center">
+                    <Div flexDirection="column">
                         <DadosUsuario 
                         // min='' 
                         // max='' 
                         // resultados='' 
                         />
-                    </Table>
+                    </Div>
                 </Div>
             </Div>
         </Div>
