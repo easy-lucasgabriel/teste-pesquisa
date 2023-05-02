@@ -11,3 +11,4 @@ export * from './Range';
 export * from './Error';
 export * from './Resumo';
 export * from './Slide';
+export * from './DadosUsuario';

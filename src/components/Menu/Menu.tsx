@@ -8,7 +8,6 @@ export const Menu = () => {
     <Column
       width="15%"
       height="auto"
-  
       >
       <Div
         width="100%"
@@ -22,6 +21,7 @@ export const Menu = () => {
       >
         <Link to="/results-jogos"><Button>Lista de Jogos</Button></Link>
         <Link to="/results-financas"><Button>Lista de Finanças</Button></Link>
+        <Link to="/results-services"><Button>Menu de Atendimento</Button></Link>
       </Div>
       </Column>
       </>
