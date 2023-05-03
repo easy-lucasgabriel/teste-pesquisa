@@ -1,4 +1,4 @@
-import { Div, Text, Input, Button } from "components";
+import { Div, Text, Input, Button, ResultadoUser } from "components";
 
 export function DadosUsuario() {
     return (
@@ -9,8 +9,8 @@ export function DadosUsuario() {
             <Div
                 flexWrap="wrap"
                 flexDirection="column"
-                alignContent="center"
                 justifyContent="space-evenly"
+                padding="2vh"
             >
                 <Div
                     width="95%"
@@ -64,14 +64,6 @@ export function DadosUsuario() {
                     </Div>
                     <Button type="submit">Filtrar</Button>
                 </Div>
-            </Div>
-
-            <Div
-                width="95%"
-                min-Height="50vh"
-                backgroundColor="white"
-            >
-                aoba
             </Div>
         </Div>
     )

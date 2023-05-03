@@ -1,5 +1,4 @@
-import { Div, Text, Input, Button, Table } from "components";
-import { DadosUsuario} from "components";
+import { Div, Text, Input, Button, Table, DadosUsuario, ResultadoUser } from "components";
 
 export const Atendimento = () => {
     return (
@@ -40,7 +39,6 @@ export const Atendimento = () => {
             </Div>
 
             <Div
-                justifyContent="center"
                 height="auto"
                 margin="0 auto"
                 width="92%"
@@ -48,10 +46,25 @@ export const Atendimento = () => {
             >
                 <Div minHeight="40vh" alignItems="center">
                     <Div flexDirection="column">
-                        <DadosUsuario 
+                        <DadosUsuario
                         // min='' 
                         // max='' 
                         // resultados='' 
+                        />
+                    </Div>
+                </Div>
+            </Div>
+            <Div
+                height="auto"
+                margin="0 auto"
+                width="92%"
+                backgroundColor="rgba(255,255,255,.9)"
+            >
+                <Div minHeight="20vh" alignItems="center"
+                >
+                    <Div flexDirection="column" 
+                    >
+                        <ResultadoUser
                         />
                     </Div>
                 </Div>

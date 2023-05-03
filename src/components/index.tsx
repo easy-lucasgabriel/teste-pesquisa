@@ -12,3 +12,4 @@ export * from './Error';
 export * from './Resumo';
 export * from './Slide';
 export * from './DadosUsuario';
+export * from './ResultadoUser';

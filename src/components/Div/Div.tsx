@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { FlexboxProps, LayoutProps, SpaceProps, flexbox, layout, space, typography , color, ColorProps, border, BorderProps, boxShadow, TypographyProps ,BoxShadowProps, position, PositionProps } from "styled-system";
+import { FlexboxProps, LayoutProps, SpaceProps, flexbox, layout, space, typography , color, ColorProps, border, BorderProps, boxShadow, TypographyProps ,BoxShadowProps, position, PositionProps, BackgroundImageProps, backgroundImage } from "styled-system";
 
-type DivProps = LayoutProps & SpaceProps & FlexboxProps & ColorProps & BorderProps & BoxShadowProps & PositionProps & TypographyProps;
+type DivProps = LayoutProps & SpaceProps & FlexboxProps & ColorProps & BorderProps & BoxShadowProps & PositionProps & TypographyProps & BackgroundImageProps;
 
 export const Div = styled.div<DivProps>`
     display:flex;
@@ -15,4 +15,5 @@ export const Div = styled.div<DivProps>`
     ${boxShadow}
     ${position}
     ${typography}
+    ${backgroundImage}
 `;
