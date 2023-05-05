@@ -1,6 +1,23 @@
 import { Div, Text, Input, Button, Table, DadosUsuario, ResultadoUser } from "components";
+import { useState } from "react";
+
+    const dados = [
+        'Pedro',
+        'Lucas',
+        'Helena',
+        'Theo',
+        'Laura',
+        'Samuel',
+        'Fernando'
+    ]
 
 export const Atendimento = () => {
+
+        const [busca, setBusca] = useState();
+        console.log('busca');
+
+        const [buscaConcluida, setBuscaConcluida] = useState<boolean>(false);
+
     return (
         <Div width="85%" flexDirection="column">
             <Div
@@ -30,15 +47,16 @@ export const Atendimento = () => {
                             <Input
                                 placeholder="Insira um dado sobre o usuario"
                                 width="80%"
-                            // value={}
+                                value={busca}
+                                // onChange=''
                             />
-                            <Button type="submit">Pesquisar</Button>
+                            <Button type="submit" onClick={setBuscaConcluida(true)}>Pesquisar</Button>
                         </Div>
                     </Div>
                 </Div>
             </Div>
-
-            <Div
+            { buscaConcluida ? (
+                <Div
                 height="auto"
                 margin="0 auto"
                 width="92%"
@@ -54,21 +72,9 @@ export const Atendimento = () => {
                     </Div>
                 </Div>
             </Div>
-            <Div
-                height="auto"
-                margin="0 auto"
-                width="92%"
-                backgroundColor="rgba(255,255,255,.9)"
-            >
-                <Div minHeight="20vh" alignItems="center"
-                >
-                    <Div flexDirection="column" 
-                    >
-                        <ResultadoUser
-                        />
-                    </Div>
-                </Div>
-            </Div>
+            ) : (
+                <></>
+            )}
         </Div>
     )
 };

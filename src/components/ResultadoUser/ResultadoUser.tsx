@@ -2,29 +2,25 @@ import { Div, Text, Input, Button } from "components";
 import { Link } from "react-router-dom";
 import { Mensagens, Extrato, Jogos, Transacao } from "./index";
 import { useState } from "react";
-import { type } from "os";
+import React from "react";
 
 export function ResultadoUser() {
-
     const componentes: { [key: string]: React.FC } = {
         "Mensagens": Mensagens,
         "Extrato": Extrato,
         "Jogos": Jogos,
         "Transacao": Transacao
-    }
-    const [componenteSelecionado, setComponenteSelecionado] = useState<React.FC>(Mensagens);
+    };
 
+    const [componenteSelecionado, setComponenteSelecionado] = useState<React.FC>(Mensagens);
 
     const handleButtonClick = (nomeBotao: keyof typeof componentes) => {
         setComponenteSelecionado(componentes[nomeBotao]);
     };
+    console.log(typeof(componenteSelecionado))
 
     return (
-        <Div
-            width="100%"
-            flexDirection="column"
-        >
-
+        <Div width="100%" flexDirection="column">
             <Div
                 width="78.2vw"
                 height="15vh"
@@ -85,7 +81,6 @@ export function ResultadoUser() {
                     <Text fontSize="2vh">R$ 0,00</Text>
                 </Div>
             </Div>
-
             <Div>
                 <Button onClick={() => handleButtonClick("Mensagens")}>
                     Mensagens
@@ -100,12 +95,8 @@ export function ResultadoUser() {
                     Bets
                 </Button>
             </Div>
-
             <Div>
-                {componenteSelecionado}
             </Div>
         </Div>
-    )
+    );
 }
-
-

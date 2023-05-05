@@ -1,10 +1,18 @@
 import { Div, Text, Input, Button, ResultadoUser } from "components";
+import { useState } from "react";
 
 export function DadosUsuario() {
+
+    const [buscaConcluida, setBuscaConcluida] = useState(false);
+
+    const handleBusca = () => {
+        setBuscaConcluida(true);
+    }
+
     return (
         <Div
-        width="95%"
-        flexDirection="column"
+            width="95%"
+            flexDirection="column"
         >
             <Div
                 flexWrap="wrap"
@@ -62,9 +70,28 @@ export function DadosUsuario() {
                             type="date"
                         />
                     </Div>
-                    <Button type="submit">Filtrar</Button>
+                    <Button type="submit" onChange={handleBusca}>Filtrar</Button>
                 </Div>
             </Div>
+            {buscaConcluida ? (
+                <Div
+                    height="auto"
+                    margin="0 auto"
+                    width="92%"
+                    backgroundColor="rgba(255,255,255,.9)"
+                >
+                    <Div minHeight="20vh" alignItems="center"
+                    >
+                        <Div flexDirection="column"
+                        >
+                            <ResultadoUser
+                            />
+                        </Div>
+                    </Div>
+                </Div> 
+                ) : (
+                <></>
+            )}
         </Div>
     )
 }
